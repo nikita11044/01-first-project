@@ -1,0 +1,29 @@
+.nav {
+    grid-area: n;
+    background-color: burlywood;
+    border-radius: 5px;
+    border: 1px solid #e6ecf5;
+    margin: 10px 10px 15px 10px;
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.item {
+    color: red;
+}
+
+.item a {
+    text-decoration: none;
+}
+
+.item a:visited {
+    color: red;
+}
+
+.active {
+    font-weight: bold;
+    color: crimson;
+}
