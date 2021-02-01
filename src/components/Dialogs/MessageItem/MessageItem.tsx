@@ -1,14 +1,14 @@
 import React from "react";
 import classes from "./MessageItem.module.css";
 
-type MessageItemPropsType = {
+export type MessageItemPropsType = {
     message: string
 }
 
-const MessageItem: React.FC<MessageItemPropsType> = (props) => {
+const MessageItem: React.FC<MessageItemPropsType> = ({message}) => {
     return (
         <div className={classes.message}>
-            {props.message}
+            {message}
         </div>
     );
 }
