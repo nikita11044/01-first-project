@@ -5,23 +5,25 @@ import {PostsType} from "../../../redux/state";
 
 export type myPostsPropsType = {
     posts: Array<PostsType>
+    newPostText: string
     addPost: (postMessage: string) => void
+    updateText: (newText: string) => void
 }
 
-const MyPosts: React.FC<myPostsPropsType> = ({posts, addPost}) => {
-    const [newPostTextValue, setNewPostTextValue] = useState<string>('')
+const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, addPost, updateText}) => {
+    // const [newPostTextValue, setNewPostTextValue] = useState<string>('')
 
     const postsElements = posts.map(el => {
         return  <Post message={el.message} likesCount={el.likesCount}/>
     })
 
     const addPostCallback = () => {
-        addPost(newPostTextValue)
-        setNewPostTextValue('')
+        addPost(newPostText)
     }
 
     const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setNewPostTextValue(e.currentTarget.value)
+        // setNewPostTextValue(e.currentTarget.value)
+        updateText(e.currentTarget.value)
     }
 
     return (
@@ -29,7 +31,7 @@ const MyPosts: React.FC<myPostsPropsType> = ({posts, addPost}) => {
             <h3 className={classes.postsBlock}>My posts</h3>
             <div>
                 <div>
-                    <textarea value={newPostTextValue} onChange={onChange}></textarea>
+                    <textarea value={newPostText} onChange={onChange}></textarea>
                 </div>
                 <div>
                     <button onClick={addPostCallback}>Add post</button>

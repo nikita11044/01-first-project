@@ -8,7 +8,7 @@ import Profile from "./components/Profile/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {RootStateType} from "./redux/state";
+import {RootStateType, updateText} from "./redux/state";
 
 export type AppType = {
    state: RootStateType
@@ -22,7 +22,7 @@ const App: React.FC<AppType> = ({state, addPost}) => {
             <Header />
             <Navbar />
             <div className='app-wrapper-content'>
-                <Route path='/profile' render={() => <Profile posts={state.profilePage.posts} addPost={addPost}/>}/>
+                <Route path='/profile' render={() => <Profile posts={state.profilePage.posts} newPostText={state.profilePage.newPostText} addPost={addPost} updateText={updateText}/>}/>
                 <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogsPage.dialogs} messages={state.dialogsPage.messages}/>}/>
             </div>
         </div>
