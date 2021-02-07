@@ -11,23 +11,27 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {RootStateType, updateText} from "./redux/state";
 
 export type AppType = {
-   state: RootStateType
-   addPost: (postMessage: string) => void
+    state: RootStateType
+    addPost: (postMessage: string) => void
+    updateText: (newText: string) => void
 }
 
 const App: React.FC<AppType> = ({state, addPost}) => {
-  return (
-    <BrowserRouter>
-        <div className='app-wrapper'>
-            <Header />
-            <Navbar />
-            <div className='app-wrapper-content'>
-                <Route path='/profile' render={() => <Profile posts={state.profilePage.posts} newPostText={state.profilePage.newPostText} addPost={addPost} updateText={updateText}/>}/>
-                <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogsPage.dialogs} messages={state.dialogsPage.messages}/>}/>
+    return (
+        <BrowserRouter>
+            <div className='app-wrapper'>
+                <Header/>
+                <Navbar/>
+                <div className='app-wrapper-content'>
+                    <Route path='/profile' render={() => <Profile posts={state.profilePage.posts}
+                                                                  newPostText={state.profilePage.newPostText}
+                                                                  addPost={addPost} updateText={updateText}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogsPage.dialogs}
+                                                                  messages={state.dialogsPage.messages}/>}/>
+                </div>
             </div>
-        </div>
-    </BrowserRouter>
-  );
+        </BrowserRouter>
+    );
 }
 
 export default App;

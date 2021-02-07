@@ -1,4 +1,10 @@
-import {renderEntireTree} from "../render";
+let renderEntireTree = (state: RootStateType) => {
+    console.log('State rendered')
+}
+
+export const subscribe = (observer: (state: RootStateType) => void) => {
+    renderEntireTree = observer
+}
 
 export type MessageType = {
     id: number,
