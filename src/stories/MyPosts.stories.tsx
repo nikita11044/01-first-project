@@ -1,7 +1,7 @@
 import React from 'react';
 import {Story} from "@storybook/react";
 import MyPosts, {myPostsPropsType} from "../components/Profile/MyPosts/MyPosts";
-import {addPost} from "../redux/state";
+import store from "../redux/state";
 
 export default {
     title: 'MyPosts',
@@ -21,7 +21,7 @@ MyPostsRender.args = {
      */
     posts: posts,
     /**
-     * A function that adds a post
+     * A dispatch function
      */
-    addPost: addPost,
+    dispatch: store.dispatch,
 }

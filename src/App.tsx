@@ -8,15 +8,14 @@ import Profile from "./components/Profile/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {RootStateType, updateText} from "./redux/state";
+import {AddPostActionType, RootStateType, UpdateTextActionType} from "./redux/state";
 
 export type AppType = {
     state: RootStateType
-    addPost: (postMessage: string) => void
-    updateText: (newText: string) => void
+    dispatch: (action: AddPostActionType | UpdateTextActionType) => void
 }
 
-const App: React.FC<AppType> = ({state, addPost}) => {
+const App: React.FC<AppType> = ({state, dispatch}) => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -25,7 +24,7 @@ const App: React.FC<AppType> = ({state, addPost}) => {
                 <div className='app-wrapper-content'>
                     <Route path='/profile' render={() => <Profile posts={state.profilePage.posts}
                                                                   newPostText={state.profilePage.newPostText}
-                                                                  addPost={addPost} updateText={updateText}/>}/>
+                                                                  dispatch={dispatch}/>}/>
                     <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogsPage.dialogs}
                                                                   messages={state.dialogsPage.messages}/>}/>
                 </div>

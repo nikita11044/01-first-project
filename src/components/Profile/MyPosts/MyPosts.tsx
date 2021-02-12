@@ -1,16 +1,15 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {PostsType} from "../../../redux/state";
+import {AddPostActionType, PostsType, UpdateTextActionType} from "../../../redux/state";
 
 export type myPostsPropsType = {
     posts: Array<PostsType>
     newPostText: string
-    addPost: (postMessage: string) => void
-    updateText: (newText: string) => void
+    dispatch: (action: AddPostActionType | UpdateTextActionType) => void
 }
 
-const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, addPost, updateText}) => {
+const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, dispatch}) => {
     // const [newPostTextValue, setNewPostTextValue] = useState<string>('')
 
     const postsElements = posts.map(el => {
@@ -18,12 +17,12 @@ const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, addPost, update
     })
 
     const addPostCallback = () => {
-        addPost(newPostText)
+        dispatch({type: 'ADD-POST'})
     }
 
     const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         // setNewPostTextValue(e.currentTarget.value)
-        updateText(e.currentTarget.value)
+        dispatch({type: "UPDATE-TEXT", newText: e.currentTarget.value})
     }
 
     return (

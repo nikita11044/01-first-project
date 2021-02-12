@@ -1,7 +1,7 @@
 import React from 'react';
 import {Story} from "@storybook/react";
 import Profile, {ProfilePropsType} from "../components/Profile/Profile";
-import {addPost} from "../redux/state";
+import store from "../redux/state";
 
 export default {
     title: 'Profile',
@@ -24,7 +24,7 @@ ProfileRender.args = {
      */
     posts: profilePageData.posts,
     /**
-     * A function that adds a post
+     * A dispatch function
      */
-    addPost: addPost,
+    dispatch: store.dispatch,
 }
