@@ -1,6 +1,7 @@
 import React from 'react';
 import {Story} from "@storybook/react";
 import Dialogs, {DialogsPropsType} from "../components/Dialogs/Dialogs";
+import {v1} from "uuid";
 
 export default {
     title: 'Dialogs',
@@ -9,17 +10,17 @@ export default {
 
 const dialogsPage = {
     dialogs: [
-        {id: 1, name: 'Dietrich'},
-        {id: 2, name: 'Wolfgang'},
-        {id: 3, name: 'Helen'},
-        {id: 4, name: 'Klaus'},
-        {id: 5, name: 'Brigitte'},
-        {id: 6, name: 'Marlene'}
+        {id: v1(), name: 'Dietrich'},
+        {id: v1(), name: 'Wolfgang'},
+        {id: v1(), name: 'Helen'},
+        {id: v1(), name: 'Klaus'},
+        {id: v1(), name: 'Brigitte'},
+        {id: v1(), name: 'Marlene'}
     ],
         messages: [
-        {id: 1, message: 'Hi!'},
-        {id: 2, message: 'How are you?'},
-        {id: 3, message: 'Yo'}
+        {id: v1(), message: 'Hi!'},
+        {id: v1(), message: 'How are you?'},
+        {id: v1(), message: 'Yo'}
     ]
 }
 

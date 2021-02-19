@@ -2,6 +2,7 @@ import React from 'react';
 import {Story} from "@storybook/react";
 import Profile, {ProfilePropsType} from "../components/Profile/Profile";
 import store from "../redux/state";
+import {v1} from "uuid";
 
 export default {
     title: 'Profile',
@@ -11,8 +12,8 @@ export default {
 const profilePageData = {
     newPostText: '',
     posts: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 12},
-        {id: 2, message: "It's my first post", likesCount: 11}
+        {id: v1(), message: 'Hi, how are you?', likesCount: 12},
+        {id: v1(), message: "It's my first post", likesCount: 11}
     ]
 }
 

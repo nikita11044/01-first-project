@@ -1,15 +1,17 @@
+import {v1} from "uuid";
+
 export type MessageType = {
-    id: number,
+    id: string,
     message: string
 }
 
 export type DialogsType = {
-    id: number,
+    id: string,
     name: string
 }
 
 export type PostsType = {
-    id: number
+    id: string
     message: string
     likesCount: number
 }
@@ -22,6 +24,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
+    newMessageBody: string
 }
 
 export type RootStateType = {
@@ -33,9 +36,34 @@ export type AddPostActionType = {
     type: 'ADD-POST'
 }
 
+export type SendMessageActionType = {
+    type: 'SEND-MESSAGE'
+}
+
 export type UpdateTextActionType = {
     type: 'UPDATE-TEXT'
     newText: string
+}
+
+export type UpdateNewMessageBodyActionType = {
+    type: 'UPDATE-MESSAGE-BODY'
+    newMessageBody: string
+}
+
+export const AddPostAC = ():AddPostActionType => {
+    return {type: 'ADD-POST'}
+}
+
+export const SendMessageAC = ():SendMessageActionType => {
+    return {type: 'SEND-MESSAGE'}
+}
+
+export const UpdateTextAC = (newText: string): UpdateTextActionType => {
+    return {type: 'UPDATE-TEXT', newText: newText}
+}
+
+export const UpdateNewMessageBodyAC = (newMessageBody: string): UpdateNewMessageBodyActionType => {
+    return {type: 'UPDATE-MESSAGE-BODY', newMessageBody: newMessageBody}
 }
 
 export type StoreType = {
@@ -43,7 +71,7 @@ export type StoreType = {
     _callSubscriber: (state: RootStateType) => void
     subscribe: (observer: (state: RootStateType) => void) => void
     getState: () => RootStateType
-    dispatch: (action: AddPostActionType | UpdateTextActionType) => void
+    dispatch: (action: AddPostActionType | UpdateTextActionType | UpdateNewMessageBodyActionType | SendMessageActionType) => void
 }
 
 const store: StoreType = {
@@ -51,24 +79,25 @@ const store: StoreType = {
         profilePage: {
             newPostText: '',
             posts: [
-                {id: 1, message: 'Hi, how are you?', likesCount: 12},
-                {id: 2, message: "It's my first post", likesCount: 11}
+                {id: v1(), message: 'Hi, how are you?', likesCount: 12},
+                {id: v1(), message: "It's my first post", likesCount: 11}
             ]
         },
         dialogsPage: {
             dialogs: [
-                {id: 1, name: 'Dietrich'},
-                {id: 2, name: 'Wolfgang'},
-                {id: 3, name: 'Helen'},
-                {id: 4, name: 'Klaus'},
-                {id: 5, name: 'Brigitte'},
-                {id: 6, name: 'Marlene'}
+                {id: v1(), name: 'Dietrich'},
+                {id: v1(), name: 'Wolfgang'},
+                {id: v1(), name: 'Helen'},
+                {id: v1(), name: 'Klaus'},
+                {id: v1(), name: 'Brigitte'},
+                {id: v1(), name: 'Marlene'}
             ],
             messages: [
-                {id: 1, message: 'Hi!'},
-                {id: 2, message: 'How are you?'},
-                {id: 3, message: 'Yo'}
-            ]
+                {id: v1(), message: 'Hi!'},
+                {id: v1(), message: 'How are you?'},
+                {id: v1(), message: 'Yo'}
+            ],
+            newMessageBody: ''
         }
     },
     _callSubscriber(state: RootStateType)  {
@@ -83,16 +112,25 @@ const store: StoreType = {
     dispatch(action) {
         if(action.type === 'ADD-POST') {
             const newPost: PostsType = {
-                id: new Date().getTime(),
+                id: v1(),
                 message: this._state.profilePage.newPostText,
                 likesCount: 0
             }
 
             this._state.profilePage.posts.push(newPost)
-            this.dispatch({type: "UPDATE-TEXT", newText: ''})
+            this._state.profilePage.newPostText = ''
             this._callSubscriber(this._state)
         } else if(action.type === 'UPDATE-TEXT') {
             this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        } else if(action.type === 'UPDATE-MESSAGE-BODY') {
+            this._state.dialogsPage.newMessageBody = action.newMessageBody
+            this._callSubscriber(this._state)
+        } else if(action.type === 'SEND-MESSAGE') {
+            let oldMessages = this._state.dialogsPage.messages
+            let body  = this._state.dialogsPage.newMessageBody
+            this._state.dialogsPage.newMessageBody = ''
+            this._state.dialogsPage.messages = [...oldMessages, {id: v1(), message: body}]
             this._callSubscriber(this._state)
         }
     }
