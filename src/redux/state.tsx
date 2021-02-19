@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
 
 export type MessageType = {
     id: string,
@@ -36,13 +38,13 @@ export type AddPostActionType = {
     type: 'ADD-POST'
 }
 
-export type SendMessageActionType = {
-    type: 'SEND-MESSAGE'
-}
-
-export type UpdateTextActionType = {
+export type UpdatePostTextActionType = {
     type: 'UPDATE-TEXT'
     newText: string
+}
+
+export type SendMessageActionType = {
+    type: 'SEND-MESSAGE'
 }
 
 export type UpdateNewMessageBodyActionType = {
@@ -50,28 +52,33 @@ export type UpdateNewMessageBodyActionType = {
     newMessageBody: string
 }
 
-export const AddPostAC = ():AddPostActionType => {
-    return {type: 'ADD-POST'}
-}
+export type ActionTypes = AddPostActionType |
+    UpdatePostTextActionType |
+    SendMessageActionType |
+    UpdateNewMessageBodyActionType
 
-export const SendMessageAC = ():SendMessageActionType => {
-    return {type: 'SEND-MESSAGE'}
-}
-
-export const UpdateTextAC = (newText: string): UpdateTextActionType => {
-    return {type: 'UPDATE-TEXT', newText: newText}
-}
-
-export const UpdateNewMessageBodyAC = (newMessageBody: string): UpdateNewMessageBodyActionType => {
-    return {type: 'UPDATE-MESSAGE-BODY', newMessageBody: newMessageBody}
-}
+// export const AddPostAC = ():AddPostActionType => {
+//     return {type: 'ADD-POST'}
+// }
+//
+// export const SendMessageAC = ():SendMessageActionType => {
+//     return {type: 'SEND-MESSAGE'}
+// }
+//
+// export const UpdatePostTextAC = (newText: string): UpdatePostTextActionType => {
+//     return {type: 'UPDATE-TEXT', newText: newText}
+// }
+//
+// export const UpdateNewMessageBodyAC = (newMessageBody: string): UpdateNewMessageBodyActionType => {
+//     return {type: 'UPDATE-MESSAGE-BODY', newMessageBody: newMessageBody}
+// }
 
 export type StoreType = {
     _state: RootStateType,
     _callSubscriber: (state: RootStateType) => void
     subscribe: (observer: (state: RootStateType) => void) => void
     getState: () => RootStateType
-    dispatch: (action: AddPostActionType | UpdateTextActionType | UpdateNewMessageBodyActionType | SendMessageActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 const store: StoreType = {
@@ -110,29 +117,9 @@ const store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if(action.type === 'ADD-POST') {
-            const newPost: PostsType = {
-                id: v1(),
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscriber(this._state)
-        } else if(action.type === 'UPDATE-TEXT') {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)
-        } else if(action.type === 'UPDATE-MESSAGE-BODY') {
-            this._state.dialogsPage.newMessageBody = action.newMessageBody
-            this._callSubscriber(this._state)
-        } else if(action.type === 'SEND-MESSAGE') {
-            let oldMessages = this._state.dialogsPage.messages
-            let body  = this._state.dialogsPage.newMessageBody
-            this._state.dialogsPage.newMessageBody = ''
-            this._state.dialogsPage.messages = [...oldMessages, {id: v1(), message: body}]
-            this._callSubscriber(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._callSubscriber(this._state)
     }
 }
 

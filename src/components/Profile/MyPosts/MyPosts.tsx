@@ -1,19 +1,13 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {
-    AddPostAC,
-    AddPostActionType,
-    PostsType, SendMessageActionType,
-    UpdateNewMessageBodyActionType,
-    UpdateTextAC,
-    UpdateTextActionType
-} from "../../../redux/state";
+import {ActionTypes, PostsType} from "../../../redux/state";
+import {AddPostAC, UpdatePostTextAC} from "../../../redux/profile-reducer";
 
 export type myPostsPropsType = {
     posts: Array<PostsType>
     newPostText: string
-    dispatch: (action: AddPostActionType | UpdateTextActionType | UpdateNewMessageBodyActionType | SendMessageActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, dispatch}) => {
@@ -26,7 +20,7 @@ const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, dispatch}) => {
     }
 
     const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(UpdateTextAC(e.currentTarget.value))
+        dispatch(UpdatePostTextAC(e.currentTarget.value))
     }
 
     return (

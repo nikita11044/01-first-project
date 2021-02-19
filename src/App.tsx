@@ -8,17 +8,11 @@ import Profile from "./components/Profile/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import {
-    AddPostActionType,
-    RootStateType,
-    SendMessageActionType,
-    UpdateNewMessageBodyActionType,
-    UpdateTextActionType
-} from "./redux/state";
+import {ActionTypes, RootStateType} from "./redux/state";
 
 export type AppType = {
     state: RootStateType
-    dispatch: (action: AddPostActionType | UpdateTextActionType | UpdateNewMessageBodyActionType | SendMessageActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 const App: React.FC<AppType> = ({state, dispatch}) => {
