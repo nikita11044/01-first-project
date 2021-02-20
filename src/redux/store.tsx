@@ -57,22 +57,6 @@ export type ActionTypes = AddPostActionType |
     SendMessageActionType |
     UpdateNewMessageBodyActionType
 
-// export const AddPostAC = ():AddPostActionType => {
-//     return {type: 'ADD-POST'}
-// }
-//
-// export const SendMessageAC = ():SendMessageActionType => {
-//     return {type: 'SEND-MESSAGE'}
-// }
-//
-// export const UpdatePostTextAC = (newText: string): UpdatePostTextActionType => {
-//     return {type: 'UPDATE-TEXT', newText: newText}
-// }
-//
-// export const UpdateNewMessageBodyAC = (newMessageBody: string): UpdateNewMessageBodyActionType => {
-//     return {type: 'UPDATE-MESSAGE-BODY', newMessageBody: newMessageBody}
-// }
-
 export type StoreType = {
     _state: RootStateType,
     _callSubscriber: (state: RootStateType) => void

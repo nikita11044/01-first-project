@@ -8,10 +8,11 @@ import Profile from "./components/Profile/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import {ActionTypes, RootStateType} from "./redux/state";
+import {ActionTypes} from "./redux/store";
+import {AppStateType} from "./redux/redux-store";
 
 export type AppType = {
-    state: RootStateType
+    state: AppStateType
     dispatch: (action: ActionTypes) => void
 }
 
@@ -21,12 +22,12 @@ const App: React.FC<AppType> = ({state, dispatch}) => {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/profile' render={() => <Profile posts={state.profilePage.posts}
-                                                                  newPostText={state.profilePage.newPostText}
+                    <Route path='/profile' render={() => <Profile posts={state.profileReducer.posts}
+                                                                  newPostText={state.profileReducer.newPostText}
                                                                   dispatch={dispatch}/>}/>
-                    <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogsPage.dialogs}
-                                                                  messages={state.dialogsPage.messages}
-                                                                  newMessageBody={state.dialogsPage.newMessageBody}
+                    <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogReducer.dialogs}
+                                                                  messages={state.dialogReducer.messages}
+                                                                  newMessageBody={state.dialogReducer.newMessageBody}
                                                                   dispatch={dispatch}/>}/>
                 </div>
             </div>

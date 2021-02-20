@@ -1,7 +1,7 @@
 import React from 'react';
 import {Story} from "@storybook/react";
 import Profile, {ProfilePropsType} from "../components/Profile/Profile";
-import store from "../redux/state";
+import store from "../redux/store";
 import {v1} from "uuid";
 
 export default {

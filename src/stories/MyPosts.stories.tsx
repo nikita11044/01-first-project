@@ -1,7 +1,7 @@
 import React from 'react';
 import {Story} from "@storybook/react";
 import MyPosts, {myPostsPropsType} from "../components/Profile/MyPosts/MyPosts";
-import store from "../redux/state";
+import store from "../redux/store";
 import {v1} from "uuid";
 
 export default {
