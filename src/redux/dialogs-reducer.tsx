@@ -1,4 +1,4 @@
-import {ActionTypes, DialogsPageType, SendMessageActionType, UpdateNewMessageBodyActionType} from "./store";
+import {ActionTypes, SendMessageActionType, UpdateNewMessageBodyActionType} from "./store";
 import {v1} from "uuid";
 
 let initialState = {

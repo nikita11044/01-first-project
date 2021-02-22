@@ -10,6 +10,7 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
 import {ActionTypes} from "./redux/store";
 import {AppStateType} from "./redux/redux-store";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 export type AppType = {
     state: AppStateType
@@ -25,7 +26,7 @@ const App: React.FC<AppType> = ({state, dispatch}) => {
                     <Route path='/profile' render={() => <Profile posts={state.profileReducer.posts}
                                                                   newPostText={state.profileReducer.newPostText}
                                                                   dispatch={dispatch}/>}/>
-                    <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogReducer.dialogs}
+                    <Route path='/dialogs' render={() => <DialogsContainer dialogs={state.dialogReducer.dialogs}
                                                                   messages={state.dialogReducer.messages}
                                                                   newMessageBody={state.dialogReducer.newMessageBody}
                                                                   dispatch={dispatch}/>}/>

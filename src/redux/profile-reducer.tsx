@@ -14,6 +14,9 @@ type InitialStateType = typeof initialState
 const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
         case "ADD-POST":
+            if(state.newPostText === '') {
+                return state
+            }
             const newPost: PostsType = {
                 id: v1(),
                 message: state.newPostText,
