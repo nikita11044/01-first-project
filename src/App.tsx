@@ -6,30 +6,17 @@ import './components/Profile/Profile.module.css'
 import Header from "./components/Header/Header";
 import Profile from "./components/Profile/Profile";
 import Navbar from "./components/Navbar/Navbar";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import {ActionTypes} from "./redux/store";
-import {AppStateType} from "./redux/redux-store";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-export type AppType = {
-    state: AppStateType
-    dispatch: (action: ActionTypes) => void
-}
-
-const App: React.FC<AppType> = ({state, dispatch}) => {
+const App: React.FC = () => {
     return (
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/profile' render={() => <Profile posts={state.profileReducer.posts}
-                                                                  newPostText={state.profileReducer.newPostText}
-                                                                  dispatch={dispatch}/>}/>
-                    <Route path='/dialogs' render={() => <DialogsContainer dialogs={state.dialogReducer.dialogs}
-                                                                  messages={state.dialogReducer.messages}
-                                                                  newMessageBody={state.dialogReducer.newMessageBody}
-                                                                  dispatch={dispatch}/>}/>
+                    <Route path='/profile' render={() => <Profile/>}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
                 </div>
             </div>
     );
