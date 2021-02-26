@@ -1,4 +1,4 @@
-import {ActionTypes, AddPostActionType, PostsType, ProfilePageType, UpdatePostTextActionType} from "./store";
+import {PostsType, ProfilePageType, SendMessageActionType, UpdateNewMessageBodyActionType} from "./store";
 import {v1} from "uuid";
 
 let initialState = {
@@ -13,7 +13,7 @@ type InitialStateType = typeof initialState
 
 const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
-        case "ADD-POST":
+        case "ADD-POST": {
             if(state.newPostText === '') {
                 return state
             }
@@ -22,17 +22,35 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
                 message: state.newPostText,
                 likesCount: 0
             }
+            const stateCopy = {...state}
             const oldPosts = state.posts
-            state.posts = [...oldPosts, newPost]
-            state.newPostText = ''
-            return state
-        case "UPDATE-TEXT":
-            state.newPostText = action.newText
-            return state
+            stateCopy.posts = [...oldPosts, newPost]
+            stateCopy.newPostText = ''
+            return stateCopy
+        }
+        case "UPDATE-TEXT": {
+            const stateCopy = {...state}
+            stateCopy.newPostText = action.newText
+            return stateCopy
+        }
         default:
             return state
     }
 }
+
+export type AddPostActionType = {
+    type: 'ADD-POST'
+}
+
+export type UpdatePostTextActionType = {
+    type: 'UPDATE-TEXT'
+    newText: string
+}
+
+export type ActionTypes = AddPostActionType |
+    UpdatePostTextActionType |
+    SendMessageActionType |
+    UpdateNewMessageBodyActionType
 
 export const AddPostAC = (): AddPostActionType => {
     return {type: 'ADD-POST'}

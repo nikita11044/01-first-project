@@ -1,32 +1,29 @@
-import React, {ChangeEvent} from "react";
+import {ChangeEvent, Dispatch} from "react";
 import {SendMessageAC, UpdateNewMessageBodyAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
-import StoreContext from "../../StoreContext";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
+import {ActionTypes} from "../../redux/store";
 
-const DialogsContainer: React.FC = () => {
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    const state = store.getState()
-                    const dialogs = state.dialogReducer.dialogs
-                    const messages = state.dialogReducer.messages
-                    const newMessageBody = state.dialogReducer.newMessageBody
-                    const onClickSendMessage = () => {
-                        store.dispatch(SendMessageAC())
-                    }
-                    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-                        store.dispatch(UpdateNewMessageBodyAC(e.currentTarget.value))
-                    }
-                    return <Dialogs dialogs={dialogs}
-                                    messages={messages}
-                                    newMessageBody={newMessageBody}
-                                    onClickSendMessage={onClickSendMessage}
-                                    onNewMessageChange={onNewMessageChange}/>
-                }
-            }
-        </StoreContext.Consumer>
-    );
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        dialogs: state.dialogReducer.dialogs,
+        messages: state.dialogReducer.messages,
+        newMessageBody: state.dialogReducer.newMessageBody
+    }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => {
+    return {
+        onClickSendMessage: () => {
+            dispatch(SendMessageAC())
+        },
+        onNewMessageChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
+            dispatch(UpdateNewMessageBodyAC(e.currentTarget.value))
+        }
+    }
+}
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 export default DialogsContainer;

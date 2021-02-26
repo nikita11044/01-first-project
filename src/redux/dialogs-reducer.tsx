@@ -1,5 +1,5 @@
-import {ActionTypes, SendMessageActionType, UpdateNewMessageBodyActionType} from "./store";
 import {v1} from "uuid";
+import {AddPostActionType, UpdatePostTextActionType} from "./profile-reducer";
 
 let initialState = {
     dialogs: [
@@ -22,19 +22,37 @@ type InitialStateType = typeof initialState
 
 const dialogsReducer = (state: InitialStateType = initialState, action: ActionTypes) => {
     switch (action.type) {
-        case "UPDATE-MESSAGE-BODY":
-            state.newMessageBody = action.newMessageBody
-            return state
-        case "SEND-MESSAGE":
+        case "UPDATE-MESSAGE-BODY": {
+            const stateCopy = {...state}
+            stateCopy.newMessageBody = action.newMessageBody
+            return stateCopy
+        }
+        case "SEND-MESSAGE": {
+            const stateCopy = {...state}
             const oldMessages = state.messages
             const body  = state.newMessageBody
-            state.newMessageBody = ''
-            state.messages = [...oldMessages, {id: v1(), message: body}]
-            return state
+            stateCopy.newMessageBody = ''
+            stateCopy.messages = [...oldMessages, {id: v1(), message: body}]
+            return stateCopy
+        }
         default:
             return state
     }
 }
+
+export type SendMessageActionType = {
+    type: 'SEND-MESSAGE'
+}
+
+export type UpdateNewMessageBodyActionType = {
+    type: 'UPDATE-MESSAGE-BODY'
+    newMessageBody: string
+}
+
+export type ActionTypes = AddPostActionType |
+    UpdatePostTextActionType |
+    SendMessageActionType |
+    UpdateNewMessageBodyActionType
 
 export const SendMessageAC = (): SendMessageActionType => {
     return {type: 'SEND-MESSAGE'}

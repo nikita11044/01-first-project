@@ -1,30 +1,28 @@
-import React, {ChangeEvent} from 'react';
+import {ChangeEvent, Dispatch} from 'react';
 import {AddPostAC, UpdatePostTextAC} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
-import StoreContext from "../../../StoreContext";
+import {connect} from "react-redux";
+import {AppStateType} from "../../../redux/redux-store";
+import {ActionTypes} from "../../../redux/store";
 
-const MyPostsContainer: React.FC = () => {
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    const state = store.getState()
-                    const posts = state.profileReducer.posts
-                    const newPostText = state.profileReducer.newPostText
-                    const addPost = () => {
-                        store.dispatch(AddPostAC())
-                    }
-                    const updateNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-                        store.dispatch(UpdatePostTextAC(e.currentTarget.value))
-                    }
-                    return <MyPosts posts={posts}
-                                    newPostText={newPostText}
-                                    addPost={addPost}
-                                    updateNewPostText={updateNewPostText}/>
-                }
-            }
-        </StoreContext.Consumer>
-    );
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        posts: state.profileReducer.posts,
+        newPostText: state.profileReducer.newPostText
+    }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => {
+    return {
+        addPost: () => {
+            dispatch(AddPostAC())
+        },
+        updateNewPostText: (e: ChangeEvent<HTMLTextAreaElement>) => {
+            dispatch(UpdatePostTextAC(e.currentTarget.value))
+        }
+    }
+}
+
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
 export default MyPostsContainer;
