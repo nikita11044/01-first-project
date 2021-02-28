@@ -14,6 +14,9 @@ const Navbar = () => {
                 </li>
                 <li className={classes.item}>News</li>
                 <li className={classes.item}>Music</li>
+                <li className={classes.item}>
+                    <NavLink to='/users' activeClassName={classes.active}>Users</NavLink>
+                </li>
             </ul>
         </nav>
     );

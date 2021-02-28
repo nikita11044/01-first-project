@@ -1,5 +1,10 @@
-import {PostsType, ProfilePageType, SendMessageActionType, UpdateNewMessageBodyActionType} from "./store";
 import {v1} from "uuid";
+
+export type PostsType = {
+    id: string
+    message: string
+    likesCount: number
+}
 
 let initialState = {
     newPostText: '',
@@ -11,27 +16,29 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): ProfilePageType => {
+const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes) => {
     switch (action.type) {
         case "ADD-POST": {
-            if(state.newPostText === '') {
+            if (state.newPostText === '') {
                 return state
             }
-            const newPost: PostsType = {
+            const oldPosts = state.posts
+            const newPost = {
                 id: v1(),
                 message: state.newPostText,
                 likesCount: 0
             }
-            const stateCopy = {...state}
-            const oldPosts = state.posts
-            stateCopy.posts = [...oldPosts, newPost]
-            stateCopy.newPostText = ''
-            return stateCopy
+            return {
+                ...state,
+                newPostText: '',
+                posts: [...oldPosts, newPost]
+            }
         }
         case "UPDATE-TEXT": {
-            const stateCopy = {...state}
-            stateCopy.newPostText = action.newText
-            return stateCopy
+            return {
+                ...state,
+                newPostText: action.newText
+            }
         }
         default:
             return state
@@ -47,10 +54,8 @@ export type UpdatePostTextActionType = {
     newText: string
 }
 
-export type ActionTypes = AddPostActionType |
-    UpdatePostTextActionType |
-    SendMessageActionType |
-    UpdateNewMessageBodyActionType
+export type ProfileActionTypes = AddPostActionType |
+    UpdatePostTextActionType
 
 export const AddPostAC = (): AddPostActionType => {
     return {type: 'ADD-POST'}
