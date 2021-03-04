@@ -1,52 +1,17 @@
-import {v1} from "uuid";
-
 export type UserType = {
+    name: string
     id: string
-    avatarURL: string
-    fullName: string
-    status: string
-    location: {
-        city: string
-        country: string
+    photos: {
+        small: string
+        large: string
     }
-    isFollowed: boolean
+    status: string
+    followed: boolean
+    uniqueUrlName: string
 }
 
 let initialState = {
-    users: [
-        {
-            id: v1(),
-            avatarURL: 'https://memepedia.ru/wp-content/uploads/2017/06/%D0%BA%D0%B8%D0%B2%D0%B8-%D1%81-%D1%80%D1%83%D0%BA%D0%B0%D0%BC%D0%B8-%D0%BC%D0%B5%D0%BC.jpg',
-            fullName: 'Richard W.',
-            status: 'Ich bin beschäftigt',
-            location: {city: 'Hamburg', country: 'Deutschland'},
-            isFollowed: false
-        },
-        {
-            id: v1(),
-            avatarURL: 'https://memepedia.ru/wp-content/uploads/2017/06/%D0%BA%D0%B8%D0%B2%D0%B8-%D1%81-%D1%80%D1%83%D0%BA%D0%B0%D0%BC%D0%B8-%D0%BC%D0%B5%D0%BC.jpg',
-            fullName: 'Irene S.',
-            status: 'Ich bin beschäftigt',
-            location: {city: 'Wien', country: 'Österreich'},
-            isFollowed: true
-        },
-        {
-            id: v1(),
-            avatarURL: 'https://memepedia.ru/wp-content/uploads/2017/06/%D0%BA%D0%B8%D0%B2%D0%B8-%D1%81-%D1%80%D1%83%D0%BA%D0%B0%D0%BC%D0%B8-%D0%BC%D0%B5%D0%BC.jpg',
-            fullName: 'Hans H.',
-            status: 'Ich bin beschäftigt',
-            location: {city: 'Berlin', country: 'Deutschland'},
-            isFollowed: false
-        },
-        {
-            id: v1(),
-            avatarURL: 'https://memepedia.ru/wp-content/uploads/2017/06/%D0%BA%D0%B8%D0%B2%D0%B8-%D1%81-%D1%80%D1%83%D0%BA%D0%B0%D0%BC%D0%B8-%D0%BC%D0%B5%D0%BC.jpg',
-            fullName: 'Walter A.',
-            status: 'Ich bin beschäftigt',
-            location: {city: 'München', country: 'Deutschland'},
-            isFollowed: true
-        }
-    ]
+    users: [] as Array<UserType>
 }
 
 type InitialStateType = typeof initialState
@@ -57,7 +22,7 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersActio
             return {
                 ...state,
                 users: state.users.map(u => {
-                    return u.id === action.id ? {...u, isFollowed: true} : u
+                    return u.id === action.id ? {...u, followed: true} : u
                 })
             }
         }
@@ -65,7 +30,7 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersActio
             return {
                 ...state,
                 users: state.users.map(u => {
-                    return u.id === action.id ? {...u, isFollowed: false} : u
+                    return u.id === action.id ? {...u, followed: false} : u
                 })
             }
         }
