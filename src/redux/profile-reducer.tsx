@@ -57,11 +57,11 @@ export type UpdatePostTextActionType = {
 export type ProfileActionTypes = AddPostActionType |
     UpdatePostTextActionType
 
-export const AddPostAC = (): AddPostActionType => {
+export const addPost = (): AddPostActionType => {
     return {type: 'ADD-POST'}
 }
 
-export const UpdatePostTextAC = (newText: string): UpdatePostTextActionType => {
+export const updatePostText = (newText: string): UpdatePostTextActionType => {
     return {type: 'UPDATE-TEXT', newText: newText}
 }
 
