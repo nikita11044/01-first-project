@@ -22,9 +22,6 @@ const mapStateToProps = (state: AppStateType) => {
 //     }
 // }
 
-const MyPostsContainer = connect(mapStateToProps, {
-    addPost,
-    updatePostText
-})(MyPosts)
+const MyPostsContainer = connect(mapStateToProps, {addPost, updatePostText})(MyPosts)
 
 export default MyPostsContainer;

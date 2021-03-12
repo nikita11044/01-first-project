@@ -3,14 +3,18 @@ import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {PostsType} from "../../../redux/profile-reducer";
 
-export type myPostsPropsType = {
+export type MyPostsPropsType = {
+    // posts: Array<PostsType>
+    // newPostText: string
+    // addPost: () => void
+    // updatePostText: (e: ChangeEvent<HTMLTextAreaElement>) => void
     posts: Array<PostsType>
     newPostText: string
     addPost: () => void
-    updateNewPostText: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    updatePostText: (newText: string) => void
 }
 
-const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, addPost, updateNewPostText}) => {
+const MyPosts: React.FC<MyPostsPropsType> = ({posts,newPostText, addPost, updatePostText}) => {
     const postsElements = posts.map(el => {
         return  <Post message={el.message} likesCount={el.likesCount}/>
     })
@@ -20,7 +24,7 @@ const MyPosts: React.FC<myPostsPropsType> = ({posts,newPostText, addPost, update
             <h3 className={classes.postsBlock}>My posts</h3>
             <div>
                 <div>
-                    <textarea value={newPostText} onChange={updateNewPostText}></textarea>
+                    <textarea value={newPostText} onChange={(e) => updatePostText(e.currentTarget.value)}></textarea>
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>

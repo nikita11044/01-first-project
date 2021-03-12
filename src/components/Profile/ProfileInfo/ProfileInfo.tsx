@@ -1,13 +1,41 @@
 import React from 'react';
+import defaultUserAvatar from '../../../assets/default-user-avatar.jpg'
 import classes from './ProfileInfo.module.css';
+import {UserProfileType} from "../../../redux/profile-reducer";
+import Preloader from "../../common/Preloader";
 
-const ProfileInfo = () => {
+type ProfileInfoPropsType = {
+    profile: UserProfileType
+}
+
+const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile}) => {
+    if(profile.userId === 0) {
+        return <Preloader />
+    }
     return (
         <div>
             <div>
                 <img src="https://cdn.visitportugal.com/sites/default/files/styles/encontre_detalhe_poi_destaque/public/mediateca/NOV0053.jpg?itok=5d6Ol_29" alt=""/>
             </div>
-            <div className={classes.descriptionBlock}>ava + descr</div>
+            <div className={classes.descriptionBlock}>
+                <img src={profile.photos.large ? profile.photos.large : defaultUserAvatar} alt=""/>
+                <h3>{profile.fullName}</h3>
+                <p>{profile.aboutMe}</p>
+                <ul>
+                    <li>{profile.contacts.github ? profile.contacts.github : `Don't have one`}</li>
+                    <li>{profile.contacts.vk ? profile.contacts.vk : `Don't have one`}</li>
+                    <li>{profile.contacts.facebook ? profile.contacts.facebook : `Don't have one`}</li>
+                    <li>{profile.contacts.instagram ? profile.contacts.instagram : `Don't have one`}</li>
+                    <li>{profile.contacts.twitter ? profile.contacts.twitter : `Don't have one`}</li>
+                    <li>{profile.contacts.website ? profile.contacts.website : `Don't have one`}</li>
+                    <li>{profile.contacts.youtube ? profile.contacts.youtube : `Don't have one`} </li>
+                    <li>{profile.contacts.mainLink ? profile.contacts.mainLink : `Don't have one`}</li>
+                </ul>
+                <div>
+                    {`Looking for a job: ${profile.lookingForAJob ? 'yes' : 'no'}`}
+                </div>
+                {profile.lookingForAJob && <p>{profile.lookingForAJobDescription}</p>}
+            </div>
         </div>
     );
 }

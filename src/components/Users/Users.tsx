@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Users.module.css";
+import {NavLink} from "react-router-dom";
 import defaultAvatar from "../../assets/default-user-avatar.jpg";
 import {UserType} from "../../redux/users-reducer";
 
@@ -43,8 +44,10 @@ const Users: React.FC<UsersPropsType> = ({
             users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img className={classes.userPhoto} src={u.photos.small ? u.photos.small : defaultAvatar}
-                             alt=""/>
+                        <NavLink to={'/profile/' + u.id}>
+                            <img className={classes.userPhoto} src={u.photos.small ? u.photos.small : defaultAvatar}
+                                 alt="user avatar"/>
+                        </NavLink>
                     </div>
                     <div>
                         {
