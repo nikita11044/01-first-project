@@ -1,18 +1,28 @@
 .nav {
     grid-area: n;
-    background-color: burlywood;
+    background-color: #fff;
     border-radius: 5px;
     border: 1px solid #e6ecf5;
     margin: 10px 10px 15px 10px;
     padding: 10px;
+    font-family: "Nunito Sans", Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 ul {
     list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
 }
 
 .item {
-    color: red;
+    color: #838daa;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .item a {
@@ -20,10 +30,10 @@ ul {
 }
 
 .item a:visited {
-    color: red;
+    color: #838daa;
 }
 
 .active {
     font-weight: bold;
-    color: crimson;
+    color: #b8b5ff;
 }

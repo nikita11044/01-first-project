@@ -2,7 +2,7 @@ import React from 'react';
 import defaultUserAvatar from '../../../assets/default-user-avatar.jpg'
 import classes from './ProfileInfo.module.css';
 import {UserProfileType} from "../../../redux/profile-reducer";
-import Preloader from "../../common/Preloader";
+import Preloader from "../../common/Preloader/Preloader";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType

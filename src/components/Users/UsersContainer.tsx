@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import Preloader from "../common/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import {AppStateType} from "../../redux/redux-store";
 import {
     follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow,
