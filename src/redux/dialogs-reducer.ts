@@ -29,7 +29,7 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const dialogsReducer = (state: InitialStateType = initialState, action: DialogsActionTypes) => {
+const dialogsReducer = (state: InitialStateType = initialState, action: DialogsActionTypes): InitialStateType => {
     switch (action.type) {
         case "UPDATE-MESSAGE-BODY": {
             return {

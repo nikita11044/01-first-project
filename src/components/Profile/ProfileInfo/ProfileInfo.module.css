@@ -1,3 +1,28 @@
 .descriptionBlock {
+    position: relative;
     padding: 10px;
 }
+
+.coverContainer {
+    height: 280px;
+    background-image: url('../../../assets/bp-cover-image.jpg')
+}
+
+.userDescription {
+    display: flex;
+    position: absolute;
+    top: -233px;
+    left: 64px;
+    align-items: center;
+    color: #fff;
+}
+
+.userAvatar {
+    width: 280px;
+    height: 280px;
+}
+
+.userNameBlock {
+    margin-left: 50px;
+}
+

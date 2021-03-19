@@ -3,3 +3,11 @@
     background-color: #7868e6;
     border-radius: 5px;
 }
+
+.loginBlock {
+    float: right;
+}
+
+.loginBlock a {
+    color: white;
+}

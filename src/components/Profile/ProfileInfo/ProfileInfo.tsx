@@ -14,13 +14,17 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile}) => {
     }
     return (
         <div>
-            <div>
-                <img src="https://cdn.visitportugal.com/sites/default/files/styles/encontre_detalhe_poi_destaque/public/mediateca/NOV0053.jpg?itok=5d6Ol_29" alt=""/>
+            <div className={classes.coverContainer}>
+                {/*<img src="https://cdn.visitportugal.com/sites/default/files/styles/encontre_detalhe_poi_destaque/public/mediateca/NOV0053.jpg?itok=5d6Ol_29" alt=""/>*/}
             </div>
             <div className={classes.descriptionBlock}>
-                <img src={profile.photos.large ? profile.photos.large : defaultUserAvatar} alt=""/>
-                <h3>{profile.fullName}</h3>
-                <p>{profile.aboutMe}</p>
+                <div className={classes.userDescription}>
+                    <img className={classes.userAvatar} src={profile.photos.large ? profile.photos.large : defaultUserAvatar} alt=""/>
+                    <div className={classes.userNameBlock}>
+                        <h3>{profile.fullName}</h3>
+                        <p>{profile.aboutMe}</p>
+                    </div>
+                </div>
                 <ul>
                     <li>{profile.contacts.github ? profile.contacts.github : `Don't have one`}</li>
                     <li>{profile.contacts.vk ? profile.contacts.vk : `Don't have one`}</li>

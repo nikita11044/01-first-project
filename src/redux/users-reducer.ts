@@ -15,12 +15,13 @@ let initialState = {
     totalUsersCount: 20,
     pageSize: 5,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: [] as Array<string>
 }
 
 type InitialStateType = typeof initialState
 
-const usersReducer = (state: InitialStateType = initialState, action: UsersActionTypes) => {
+const usersReducer = (state: InitialStateType = initialState, action: UsersActionTypes): InitialStateType => {
     switch (action.type) {
         case "FOLLOW": {
             return {
@@ -62,6 +63,14 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersActio
                 isFetching: action.isFetching
             }
         }
+        case "TOGGLE-FOLLOWING-IN-PROGRESS": {
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
+        }
         default:
             return state
     }
@@ -97,12 +106,19 @@ export type ToggleIsFetchingActionType = {
     isFetching: boolean
 }
 
+export type ToggleFollowingInProgressActionType = {
+    type: 'TOGGLE-FOLLOWING-IN-PROGRESS'
+    isFetching: boolean,
+    userId: string
+}
+
 export type UsersActionTypes = FollowActionType |
     UnfollowActionType |
     SetUsersActionType |
     SetCurrentPageActionType |
     SetTotalUsersCountActionType |
-    ToggleIsFetchingActionType
+    ToggleIsFetchingActionType |
+    ToggleFollowingInProgressActionType
 
 export const follow = (userID: string): FollowActionType => {
     return {type: 'FOLLOW', id: userID}
@@ -126,6 +142,10 @@ export const setTotalUsersCount = (totalCount: number): SetTotalUsersCountAction
 
 export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingActionType => {
     return {type: 'TOGGLE-IS-FETCHING', isFetching}
+}
+
+export const toggleFollowingInProgress = (isFetching: boolean, userId: string): ToggleFollowingInProgressActionType => {
+    return {type: "TOGGLE-FOLLOWING-IN-PROGRESS", isFetching, userId}
 }
 
 export default usersReducer

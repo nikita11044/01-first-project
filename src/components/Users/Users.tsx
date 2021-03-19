@@ -3,15 +3,18 @@ import classes from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import defaultAvatar from "../../assets/default-user-avatar.jpg";
 import {UserType} from "../../redux/users-reducer";
+import {followUser, unfollowUser} from "../../api/api";
 
 type UsersPropsType = {
-    users: Array<UserType>
+    users: UserType[]
     totalUsersCount: number
     pageSize: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
     follow: (userID: string) => void
     unfollow: (userID: string) => void
+    followingInProgress: string[]
+    toggleFollowingInProgress: (isFetching: boolean, userId: string) => void
 }
 
 const Users: React.FC<UsersPropsType> = ({
@@ -21,7 +24,9 @@ const Users: React.FC<UsersPropsType> = ({
                                              currentPage,
                                              unfollow,
                                              follow,
-                                             onPageChanged
+                                             onPageChanged,
+                                             followingInProgress,
+                                             toggleFollowingInProgress
                                          }) => {
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize)
@@ -52,8 +57,23 @@ const Users: React.FC<UsersPropsType> = ({
                     <div>
                         {
                             u.followed ?
-                                <button onClick={() => unfollow(u.id)}>Unfollow</button> :
-                                <button onClick={() => follow(u.id)}>Follow</button>
+                                <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
+                                    toggleFollowingInProgress(true, u.id)
+                                    unfollowUser(u.id).then(() => {
+                                        unfollow(u.id)
+                                        toggleFollowingInProgress(false, u.id)
+                                    })
+                                }
+                                }>Unfollow</button> :
+                                <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
+                                    debugger
+                                    toggleFollowingInProgress(true, u.id)
+                                    followUser(u.id).then(() => {
+                                        follow(u.id)
+                                        toggleFollowingInProgress(false, u.id)
+                                    })
+                                }
+                                }>Follow</button>
                         }
                     </div>
                 </span>

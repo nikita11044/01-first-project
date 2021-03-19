@@ -49,7 +49,7 @@ let initialState = {
         lookingForAJob: false,
         lookingForAJobDescription: '',
         fullName: '',
-        userId: 0,
+        userId: 2,
         photos: {
             small: '',
             large: ''
@@ -59,7 +59,7 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes) => {
+const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes): InitialStateType => {
     switch (action.type) {
         case "ADD-POST": {
             if (state.newPostText === '') {
