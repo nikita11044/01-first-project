@@ -2,8 +2,8 @@ import {UserProfileType} from "./profile-reducer";
 import {IUser} from "./users-reducer";
 
 export const actions = {
-    follow: (userID: string) => ({type: 'FOLLOW' as const, id: userID}),
-    unfollow: (userID: string) => ({type: 'UNFOLLOW' as const, id: userID}),
+    followSuccess: (userID: string) => ({type: 'FOLLOW' as const, id: userID}),
+    unfollowSuccess: (userID: string) => ({type: 'UNFOLLOW' as const, id: userID}),
     setUsers: (users: Array<IUser>) => ({type: 'SET-USERS' as const, users: users}),
     setCurrentPage: (currentPage: number) => ({type: 'SET-CURRENT-PAGE' as const, currentPage}),
     setTotalUsersCount: (totalCount: number) => ({type: 'SET-TOTAL-USERS-COUNT' as const, totalCount}),

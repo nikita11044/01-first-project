@@ -1,5 +1,8 @@
 import {v1} from "uuid";
-import {ActionTypes} from "./action-creators";
+import {actions, ActionTypes} from "./action-creators";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AppStateType} from "./redux-store";
+import {profileAPI} from "../api/api";
 
 export type PostsType = {
     id: string
@@ -92,6 +95,15 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
         }
         default:
             return state
+    }
+}
+
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
+
+export const getUserProfile = (userId: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+        profileAPI.getUserProfile(userId)
+            .then(response => dispatch(actions.setUserProfile(response.data)))
     }
 }
 

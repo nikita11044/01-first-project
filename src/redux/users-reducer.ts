@@ -1,4 +1,7 @@
-import {ActionTypes} from "./action-creators";
+import {actions, ActionTypes} from "./action-creators";
+import {AppStateType} from "./redux-store";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {usersAPI} from "../api/api";
 
 export interface IUser {
     name: string
@@ -74,6 +77,42 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
         }
         default:
             return state
+    }
+}
+
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
+
+export const getUsers = (currentPage: number, pageSize: number):ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+        dispatch(actions.toggleIsFetching(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(actions.setUsers(data.items))
+                dispatch(actions.setTotalUsersCount(data.totalCount))
+                dispatch(actions.toggleIsFetching(false))
+            })
+    }
+}
+
+export const follow = (userId: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+        dispatch(actions.toggleFollowingInProgress(true, userId))
+        usersAPI.follow(userId)
+            .then(() => {
+                dispatch(actions.followSuccess(userId))
+                dispatch(actions.toggleFollowingInProgress(false, userId))
+            })
+    }
+}
+
+export const unfollow = (userId: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+        dispatch(actions.toggleFollowingInProgress(true, userId))
+        usersAPI.unfollow(userId)
+            .then(() => {
+                dispatch(actions.unfollowSuccess(userId))
+                dispatch(actions.toggleFollowingInProgress(false, userId))
+            })
     }
 }
 

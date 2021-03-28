@@ -16,7 +16,7 @@ export type MyPostsPropsType = {
 
 const MyPosts: React.FC<MyPostsPropsType> = ({posts,newPostText, addPost, updatePostText}) => {
     const postsElements = posts.map(el => {
-        return  <Post message={el.message} likesCount={el.likesCount}/>
+        return  <Post key={el.id} message={el.message} likesCount={el.likesCount}/>
     })
 
     return (

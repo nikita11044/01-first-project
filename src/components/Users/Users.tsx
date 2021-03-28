@@ -3,7 +3,6 @@ import classes from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import defaultAvatar from "../../assets/default-user-avatar.jpg";
 import {IUser} from "../../redux/users-reducer";
-import {followUser, unfollowUser} from "../../api/api";
 
 type UsersPropsType = {
     users: IUser[]
@@ -58,32 +57,23 @@ const Users: React.FC<UsersPropsType> = ({
                         {
                             u.followed ?
                                 <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
-                                    toggleFollowingInProgress(true, u.id)
-                                    unfollowUser(u.id).then(() => {
-                                        unfollow(u.id)
-                                        toggleFollowingInProgress(false, u.id)
-                                    })
+                                    unfollow(u.id)
                                 }
                                 }>Unfollow</button> :
                                 <button disabled={followingInProgress.some(id => id === u.id)} onClick={() => {
-                                    debugger
-                                    toggleFollowingInProgress(true, u.id)
-                                    followUser(u.id).then(() => {
-                                        follow(u.id)
-                                        toggleFollowingInProgress(false, u.id)
-                                    })
+                                    follow(u.id)
                                 }
                                 }>Follow</button>
                         }
                     </div>
                 </span>
-                <span>
+                    <span>
                     <span>
                         <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
                 </span>
-            </div>)
+                </div>)
         }
     </div>
 }

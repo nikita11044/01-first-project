@@ -2,7 +2,7 @@
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
-import {actions, ActionTypes} from "../../../redux/action-creators";
+import {actions} from "../../../redux/action-creators";
 
 const mapStateToProps = (state: AppStateType) => {
     return {
