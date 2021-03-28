@@ -1,4 +1,4 @@
-export type UserType = {
+export interface IUser {
     name: string
     id: string
     photos: {
@@ -7,11 +7,10 @@ export type UserType = {
     }
     status: string
     followed: boolean
-    uniqueUrlName: string
 }
 
 let initialState = {
-    users: [] as Array<UserType>,
+    users: [] as Array<IUser>,
     totalUsersCount: 20,
     pageSize: 5,
     currentPage: 1,
@@ -88,7 +87,7 @@ export type UnfollowActionType = {
 
 export type SetUsersActionType = {
     type: 'SET-USERS'
-    users: Array<UserType>
+    users: Array<IUser>
 }
 
 export type SetCurrentPageActionType = {
@@ -128,7 +127,7 @@ export const unfollow = (userID: string): UnfollowActionType => {
     return {type: 'UNFOLLOW', id: userID}
 }
 
-export const setUsers = (users: Array<UserType>): SetUsersActionType => {
+export const setUsers = (users: Array<IUser>): SetUsersActionType => {
     return {type: 'SET-USERS', users: users}
 }
 

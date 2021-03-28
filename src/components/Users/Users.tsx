@@ -2,11 +2,11 @@ import React from "react";
 import classes from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import defaultAvatar from "../../assets/default-user-avatar.jpg";
-import {UserType} from "../../redux/users-reducer";
+import {IUser} from "../../redux/users-reducer";
 import {followUser, unfollowUser} from "../../api/api";
 
 type UsersPropsType = {
-    users: UserType[]
+    users: IUser[]
     totalUsersCount: number
     pageSize: number
     currentPage: number

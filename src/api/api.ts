@@ -1,4 +1,17 @@
 import axios from "axios";
+import {IUser} from "../redux/users-reducer";
+
+type GetUsersResponseType = {
+    items: IUser[]
+    totalCount: number
+    error: string | null
+}
+
+type FollowingResponseType = {
+    resultCode: number
+    messages: string[]
+    data: Object
+}
 
 const instance = axios.create({
     withCredentials: true,
@@ -9,15 +22,15 @@ const instance = axios.create({
 })
 
 export const getUsers = (currentPage: number, pageSize: number) => {
-    return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => {
+    return instance.get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}`).then(response => {
         return response.data
     })
 }
 
 export const followUser = (userId: string) => {
-    return instance.post(`follow/${userId}`)
+    return instance.post<FollowingResponseType>(`follow/${userId}`)
 }
 
 export const unfollowUser = (userId: string) => {
-    return instance.delete(`follow/${userId}`)
+    return instance.delete<FollowingResponseType>(`follow/${userId}`)
 }

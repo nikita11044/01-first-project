@@ -4,17 +4,17 @@ import Preloader from "../common/Preloader/Preloader";
 import {AppStateType} from "../../redux/redux-store";
 import {
     follow, setCurrentPage, setTotalUsersCount, setUsers, toggleFollowingInProgress, toggleIsFetching, unfollow,
-    UserType
+    IUser
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import {getUsers} from "../../api/api";
 
 type StateType = {
-    users: UserType[]
+    users: IUser[]
 }
 
 type MapStateToPropsType = {
-    users: UserType[]
+    users: IUser[]
     totalUsersCount: number
     pageSize: number
     currentPage: number
@@ -25,7 +25,7 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     follow: (userID: string) => void
     unfollow: (userID: string) => void
-    setUsers: (users: Array<UserType>) => void
+    setUsers: (users: Array<IUser>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
