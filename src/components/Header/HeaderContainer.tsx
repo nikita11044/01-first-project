@@ -2,8 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import Header from "./Header";
 import {AppStateType} from "../../redux/redux-store";
-import {setData} from "../../redux/auth-reducer";
 import axios from "axios";
+import {actions} from "../../redux/action-creators";
 
 type MapStateToPropsType = {
     login: string
@@ -40,5 +40,7 @@ function mapStateToProps(state: AppStateType): MapStateToPropsType {
         login: state.authReducer.login
     }
 }
+
+const {setData} = actions
 
 export default connect(mapStateToProps, {setData})(HeaderContainer)

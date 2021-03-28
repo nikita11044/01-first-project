@@ -1,8 +1,8 @@
 import {ChangeEvent, Dispatch} from "react";
-import {DialogsActionTypes, SendMessageAC, UpdateNewMessageBodyAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
+import {actions, ActionTypes} from "../../redux/action-creators";
 
 const mapStateToProps = (state: AppStateType) => {
     return {
@@ -12,13 +12,13 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<DialogsActionTypes>) => {
+const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => {
     return {
         onClickSendMessage: () => {
-            dispatch(SendMessageAC())
+            dispatch(actions.sendMessage())
         },
         onNewMessageChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
-            dispatch(UpdateNewMessageBodyAC(e.currentTarget.value))
+            dispatch(actions.updateNewMessageBody(e.currentTarget.value))
         }
     }
 }

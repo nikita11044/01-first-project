@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {ActionTypes} from "./action-creators";
 
 export type MessageType = {
     id: string,
@@ -29,7 +30,7 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const dialogsReducer = (state: InitialStateType = initialState, action: DialogsActionTypes): InitialStateType => {
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case "UPDATE-MESSAGE-BODY": {
             return {
@@ -48,27 +49,6 @@ const dialogsReducer = (state: InitialStateType = initialState, action: DialogsA
         default:
             return state
     }
-}
-
-export type SendMessageActionType = {
-    type: 'SEND-MESSAGE'
-}
-
-export type UpdateNewMessageBodyActionType = {
-    type: 'UPDATE-MESSAGE-BODY'
-    newMessageBody: string
-}
-
-export type DialogsActionTypes =
-    SendMessageActionType |
-    UpdateNewMessageBodyActionType
-
-export const SendMessageAC = (): SendMessageActionType => {
-    return {type: 'SEND-MESSAGE'}
-}
-
-export const UpdateNewMessageBodyAC = (newMessageBody: string): UpdateNewMessageBodyActionType => {
-    return {type: 'UPDATE-MESSAGE-BODY', newMessageBody: newMessageBody}
 }
 
 export default dialogsReducer;

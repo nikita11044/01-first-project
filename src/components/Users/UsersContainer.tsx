@@ -2,12 +2,10 @@ import React from "react";
 import {connect} from "react-redux";
 import Preloader from "../common/Preloader/Preloader";
 import {AppStateType} from "../../redux/redux-store";
-import {
-    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleFollowingInProgress, toggleIsFetching, unfollow,
-    IUser
-} from "../../redux/users-reducer";
+import {IUser} from "../../redux/users-reducer";
 import Users from "./Users";
 import {getUsers} from "../../api/api";
+import {actions} from "../../redux/action-creators";
 
 type StateType = {
     users: IUser[]
@@ -108,5 +106,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 //         }
 //     }
 // }
+
+const {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingInProgress} = actions
 
 export default connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingInProgress})(UsersContainer)

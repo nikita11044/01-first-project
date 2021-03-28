@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {ActionTypes} from "./action-creators";
 
 export type PostsType = {
     id: string
@@ -59,7 +60,7 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes): InitialStateType => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case "ADD-POST": {
             if (state.newPostText === '') {
@@ -92,36 +93,6 @@ const profileReducer = (state: InitialStateType = initialState, action: ProfileA
         default:
             return state
     }
-}
-
-export type AddPostActionType = {
-    type: 'ADD-POST'
-}
-
-export type UpdatePostTextActionType = {
-    type: 'UPDATE-POST-TEXT'
-    newText: string
-}
-
-export type SetUserProfile = {
-    type: 'SET-USER-PROFILE'
-    profile: UserProfileType
-}
-
-export type ProfileActionTypes = AddPostActionType |
-    UpdatePostTextActionType |
-    SetUserProfile
-
-export const addPost = (): AddPostActionType => {
-    return {type: 'ADD-POST'}
-}
-
-export const updatePostText = (newText: string): UpdatePostTextActionType => {
-    return {type: 'UPDATE-POST-TEXT', newText: newText}
-}
-
-export const setUserProfile = (profile: UserProfileType): SetUserProfile => {
-    return {type: 'SET-USER-PROFILE', profile}
 }
 
 export default profileReducer;

@@ -1,3 +1,5 @@
+import {ActionTypes} from "./action-creators";
+
 let initialState = {
     id: 0,
     email: '',
@@ -21,8 +23,3 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
         }
     }
 }
-
-export const setData = (userID: number, email: string, login: string) => ({type: 'SET-USER-DATA', data: {userID, email, login}} as const)
-export type SetDataActionType = ReturnType<typeof setData>
-
-type ActionTypes = SetDataActionType
