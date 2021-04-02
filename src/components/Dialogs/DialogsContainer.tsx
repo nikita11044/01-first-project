@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {actions} from "../../redux/action-creators";
 import {DialogsType, MessageType} from "../../redux/dialogs-reducer";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type StateType = {
     dialogs: DialogsType[]
@@ -37,10 +39,10 @@ class DialogsContainer extends React.Component<PropsType, StateType> {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        dialogs: state.dialogReducer.dialogs,
-        messages: state.dialogReducer.messages,
-        newMessageBody: state.dialogReducer.newMessageBody,
-        isAuth: state.authReducer.isAuth
+        dialogs: state.dialogs.dialogs,
+        messages: state.dialogs.messages,
+        newMessageBody: state.dialogs.newMessageBody,
+        isAuth: state.auth.isAuth
     }
 }
 
@@ -57,4 +59,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 const {sendMessage, updateNewMessageBody} = actions
 
-export default connect(mapStateToProps, {sendMessage, updateNewMessageBody})(DialogsContainer)
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {sendMessage, updateNewMessageBody}),
+)(DialogsContainer)

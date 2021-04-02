@@ -6,8 +6,8 @@ import {actions} from "../../../redux/action-creators";
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        posts: state.profileReducer.posts,
-        newPostText: state.profileReducer.newPostText
+        posts: state.profile.posts,
+        newPostText: state.profile.newPostText
     }
 }
 
