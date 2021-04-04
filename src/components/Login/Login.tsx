@@ -1,10 +1,6 @@
 import React from "react";
 
-type LoginPropsType = {
-
-}
-
-const Login: React.FC<LoginPropsType> = () => {
+const Login: React.FC = () => {
     return (
         <div>
             <h1>LOGIN</h1>

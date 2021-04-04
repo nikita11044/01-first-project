@@ -20,7 +20,7 @@ const MyPosts: React.FC<MyPostsPropsType> = ({posts,newPostText, addPost, update
     })
 
     return (
-        <div>
+        <>
             <h3 className={classes.postsBlock}>My posts</h3>
             <div>
                 <div>
@@ -35,7 +35,7 @@ const MyPosts: React.FC<MyPostsPropsType> = ({posts,newPostText, addPost, update
                     postsElements
                 }
             </div>
-        </div>
+        </>
     );
 }
 

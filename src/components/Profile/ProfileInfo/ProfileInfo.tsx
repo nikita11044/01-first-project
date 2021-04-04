@@ -3,6 +3,7 @@ import defaultUserAvatar from '../../../assets/default-user-avatar.jpg'
 import classes from './ProfileInfo.module.css';
 import {UserProfileType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
+import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType
@@ -23,6 +24,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile}) => {
                     <div className={classes.userNameBlock}>
                         <h3>{profile.fullName}</h3>
                         <p>{profile.aboutMe}</p>
+                        <ProfileStatus status={'status'}/>
                     </div>
                 </div>
                 <ul>

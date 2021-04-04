@@ -42,8 +42,6 @@ class ProfileContainer extends React.Component<PropsType, StateType> {
     }
 
     render() {
-        if (!this.props.isAuth) return <Redirect to='/login' />
-
         return (
             <Profile {...this.props}/>
         )
@@ -64,3 +62,4 @@ export default compose<React.ComponentType>(
     withRouter,
     withAuthRedirect
 )(ProfileContainer)
+
