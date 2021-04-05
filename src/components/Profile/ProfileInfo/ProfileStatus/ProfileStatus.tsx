@@ -1,26 +1,47 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 
 type PropsType = {
     status: string
+    updateStatus: (newStatus: string) => void
 }
 
 class ProfileStatus extends React.Component<PropsType> {
     state = {
-        editMode: false
+        editMode: false,
+        status: this.props.status
     }
 
-    toggleEditMode = () => {
-        this.setState({editMode: !this.state.editMode})
+    activateEditMode = () => {
+        this.setState({editMode: true})
+    }
+
+    deactivateEditMode = () => {
+        this.setState({editMode: false})
+        this.props.updateStatus(this.props.status)
+    }
+
+    onStatusChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
+
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{editMode: boolean, status: string}>) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
         return (
             <>
                 {
-                    !this.state.editMode && <div><span onDoubleClick={this.toggleEditMode}>{this.props.status}</span></div>
+                    !this.state.editMode && <div><span onDoubleClick={this.activateEditMode}>{this.props.status}</span></div>
                 }
                 {
-                    this.state.editMode && <div><input autoFocus onBlur={this.toggleEditMode} value={this.props.status}/></div>
+                    this.state.editMode && <div><input autoFocus onBlur={this.deactivateEditMode} onChange={(e) => this.onStatusChangeHandler(e)} value={this.state.status}/></div>
                 }
             </>
         )

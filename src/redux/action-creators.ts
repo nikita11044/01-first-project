@@ -14,7 +14,8 @@ export const actions = {
     addPost: () => ({type: 'ADD-POST' as const}),
     updatePostText: (newText: string) => ({type: 'UPDATE-POST-TEXT' as const, newText: newText}),
     setUserProfile: (profile: UserProfileType) => ({type: 'SET-USER-PROFILE' as const, profile}),
-    setData: (userID: number, email: string, login: string) => ({type: 'SET-USER-DATA' as const, data: {userID, email, login}})
+    setData: (userID: number, email: string, login: string) => ({type: 'SET-USER-DATA' as const, data: {userID, email, login}}),
+    setStatus: (status: string) => ({type: 'SET-STATUS' as const, status}),
 }
 
 type InferActionTypes<T> = T extends {[key: string]: infer U} ? U : never
