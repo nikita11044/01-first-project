@@ -15,13 +15,11 @@ type StateType = {
 type MapStateToPropsType = {
     dialogs: DialogsType[]
     messages: MessageType[]
-    newMessageBody: string
     isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
-    sendMessage: () => void
-    updateNewMessageBody: (newMessageBody: string) => void
+    sendMessage: (message: string) => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -29,11 +27,9 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType
 class DialogsContainer extends React.Component<PropsType, StateType> {
     render() {
         return <Dialogs
-        newMessageBody={this.props.newMessageBody}
         dialogs={this.props.dialogs}
         messages={this.props.messages}
-        sendMessage={this.props.sendMessage}
-        updateNewMessageBody={this.props.updateNewMessageBody}/>
+        sendMessage={this.props.sendMessage}/>
     }
 }
 
@@ -41,7 +37,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dialogs: state.dialogs.dialogs,
         messages: state.dialogs.messages,
-        newMessageBody: state.dialogs.newMessageBody,
         isAuth: state.auth.isAuth
     }
 }
@@ -57,9 +52,9 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 //     }
 // }
 
-const {sendMessage, updateNewMessageBody} = actions
+const {sendMessage} = actions
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {sendMessage, updateNewMessageBody}),
+    connect(mapStateToProps, {sendMessage}),
     withAuthRedirect
 )(DialogsContainer)

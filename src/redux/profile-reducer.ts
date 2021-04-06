@@ -143,17 +143,17 @@ type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 export const getUserProfile = (userId: string): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
         profileAPI.getUserProfile(userId)
-            .then(response => dispatch(actions.setUserProfile(response.data)))
+            .then(response => {
+                console.log(response)
+                dispatch(actions.setUserProfile(response.data))
+            })
     }
 }
 
 export const getStatus = (userId: string): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
         profileAPI.getStatus(userId)
-            .then(response => {
-                console.log(response)
-                dispatch(actions.setStatus(response.data))
-            })
+            .then(response => dispatch(actions.setStatus(response.data)))
     }
 }
 

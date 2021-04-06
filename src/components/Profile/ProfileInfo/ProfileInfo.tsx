@@ -22,7 +22,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
             </div>
             <div className={classes.descriptionBlock}>
                 <div className={classes.userDescription}>
-                    <img className={classes.userAvatar} src={profile.photos.large ? profile.photos.large : defaultUserAvatar} alt=""/>
+                    <img className={classes.userAvatar} src={profile.photos.large ? profile.photos.large : defaultUserAvatar} alt="user-avatar"/>
                     <div className={classes.userNameBlock}>
                         <h3>{profile.fullName}</h3>
                         <p>{profile.aboutMe}</p>

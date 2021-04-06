@@ -3,16 +3,15 @@ import DialogItem from "./DialogItem/DialogItem";
 import classes from "./Dialogs.module.css";
 import MessageItem from "./MessageItem/MessageItem";
 import {DialogsType, MessageType} from "../../redux/dialogs-reducer";
+import AddMessageForm from "../common/AddMessageForm/AddMessageForm";
 
 export type DialogsPropsType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
-    newMessageBody: string
-    sendMessage: () => void
-    updateNewMessageBody: (newMessageBody: string) => void
+    sendMessage: (message: string) => void
 }
 
-const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, newMessageBody, sendMessage, updateNewMessageBody}) => {
+const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, sendMessage}) => {
 
     const dialogElements = dialogs.map(el => {
         return <DialogItem key={el.id} name={el.name} id={el.id}/>
@@ -32,14 +31,7 @@ const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, newMessageBody,
             <div className={classes.messages}>
                 <div>{messagesElements}</div>
                 <div>
-                    <div>
-                        <textarea value={newMessageBody}
-                                  onChange={(e) => {updateNewMessageBody(e.currentTarget.value)}}
-                                  placeholder='Enter your message'></textarea>
-                    </div>
-                    <div>
-                        <button onClick={sendMessage}>Send</button>
-                    </div>
+                    <AddMessageForm sendMessage={sendMessage}/>
                 </div>
             </div>
         </div>
