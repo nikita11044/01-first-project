@@ -1,5 +1,6 @@
 import {UserProfileType} from "./profile-reducer";
 import {IUser} from "./users-reducer";
+import {v1} from "uuid";
 
 export const actions = {
     followSuccess: (userID: string) => ({type: 'FOLLOW' as const, id: userID}),
@@ -10,8 +11,7 @@ export const actions = {
     toggleIsFetching: (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING' as const, isFetching}),
     toggleFollowingInProgress: (isFetching: boolean, userId: string) => ({type: 'TOGGLE-FOLLOWING-IN-PROGRESS' as const, isFetching, userId}),
     sendMessage: (message: string) => ({type: 'SEND-MESSAGE' as const, message: message}),
-    addPost: () => ({type: 'ADD-POST' as const}),
-    updatePostText: (newText: string) => ({type: 'UPDATE-POST-TEXT' as const, newText: newText}),
+    addPost: (post: string) => ({type: 'ADD-POST' as const, post: {id: v1(), message: post, likesCount: 0}}),
     setUserProfile: (profile: UserProfileType) => ({type: 'SET-USER-PROFILE' as const, profile}),
     setData: (userID: number, email: string, login: string) => ({type: 'SET-USER-DATA' as const, data: {userID, email, login}}),
     setStatus: (status: string) => ({type: 'SET-STATUS' as const, status}),

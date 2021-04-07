@@ -75,7 +75,6 @@ export type UserProfileType = {
 // }
 
 let initialState = {
-    newPostText: '',
     posts: [
         {id: v1(), message: 'Hi, how are you?', likesCount: 12},
         {id: v1(), message: "It's my first post", likesCount: 11}
@@ -100,25 +99,23 @@ type InitialStateType = typeof initialState
 const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case "ADD-POST": {
-            if (state.newPostText === '') {
-                return state
-            }
-            const oldPosts = state.posts
-            const newPost = {
-                id: v1(),
-                message: state.newPostText,
-                likesCount: 0
-            }
+            // if (state.newPostText === '') {
+            //     return state
+            // }
+            // const oldPosts = state.posts
+            // const newPost = {
+            //     id: v1(),
+            //     message: state.newPostText,
+            //     likesCount: 0
+            // }
+            // return {
+            //     ...state,
+            //     newPostText: '',
+            //     posts: [...oldPosts, newPost]
+            // }
             return {
                 ...state,
-                newPostText: '',
-                posts: [...oldPosts, newPost]
-            }
-        }
-        case "UPDATE-POST-TEXT": {
-            return {
-                ...state,
-                newPostText: action.newText
+                posts: [action.post, ...state.posts]
             }
         }
         case "SET-USER-PROFILE": {

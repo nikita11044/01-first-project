@@ -3,7 +3,7 @@ import DialogItem from "./DialogItem/DialogItem";
 import classes from "./Dialogs.module.css";
 import MessageItem from "./MessageItem/MessageItem";
 import {DialogsType, MessageType} from "../../redux/dialogs-reducer";
-import AddMessageForm from "../common/AddMessageForm/AddMessageForm";
+import {AddMessageForm} from "../common/AddMessageForm/AddMessageForm";
 
 export type DialogsPropsType = {
     dialogs: Array<DialogsType>
@@ -31,7 +31,7 @@ const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, sendMessage}) =
             <div className={classes.messages}>
                 <div>{messagesElements}</div>
                 <div>
-                    <AddMessageForm sendMessage={sendMessage}/>
+                    <AddMessageForm sendMessage={sendMessage} placeholder={'Enter you message'}/>
                 </div>
             </div>
         </div>

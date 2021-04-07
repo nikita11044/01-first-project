@@ -1,5 +1,5 @@
 import React from "react";
-import {Form, Field} from "react-final-form"
+import {Field, Form, Formik} from "formik";
 
 const Login: React.FC = () => {
     return (
@@ -12,53 +12,30 @@ const Login: React.FC = () => {
 
 const LoginForm: React.FC = () => {
 
-    type LoginFormValuesType = {
-        login: string,
-        password: string,
-        rememberMe: boolean
-    }
-
-    const onSubmit = (values: LoginFormValuesType) => {
-        console.log(values)
-    }
-
+    const initialValues = { login: '', password: '', rememberMe: false };
     return (
-        <Form
-            onSubmit={onSubmit}
-            render={({handleSubmit}) => (
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <Field
-                            name="login"
-                            component="input"
-                            placeholder="Login"
-                        />
-                    </div>
-                    <div>
-                        <Field
-                            name="password"
-                            type="password"
-                            component="input"
-                            placeholder="Password"
-                        />
-                    </div>
-                    <div>
-                        <label>
-                            <Field
-                                name="remember"
-                                component="input"
-                                type="checkbox"
-                            />{' '}
-                            Remember me
-                        </label>
-                    </div>
-                    <div>
-                        <button type="submit">Login</button>
-                    </div>
-                </form>
-            )}
-        />
-    )
+        <div>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={(values) => {
+                    console.log(values)
+                }}
+            >
+                <Form>
+                    <label htmlFor="login">Login</label>
+                    <Field name="login" />
+
+                    <label htmlFor="password">Password</label>
+                    <Field type="password" name="password" />
+
+                    <label htmlFor="rememberMe">Remember me</label>
+                    <Field type="checkbox" name="rememberMe" />
+
+                    <button type="submit">Submit</button>
+                </Form>
+            </Formik>
+        </div>
+    );
 }
 
 export default Login

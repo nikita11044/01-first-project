@@ -1,38 +1,37 @@
-import React from "react";
-import {Field, Form} from "react-final-form";
-import TextAreaInput from "./TextAreaInput/TextAreaInput";
+import * as React from 'react';
+import {
+    Formik,
+    FormikHelpers,
+    FormikProps,
+    Form,
+    Field,
+    FieldProps,
+} from 'formik';
 
-type AddMessageFormPropsType = {
+type AddMessageFormikPropsType = {
     sendMessage: (message: string) => void
+    placeholder: string
 }
 
-type AddMessageFormValuesType = {
-    message: string
+interface MyFormValues {
+    message: string;
 }
 
-
-const AddMessageForm: React.FC<AddMessageFormPropsType> = ({sendMessage}) => {
-
-    const onSubmit = (value: AddMessageFormValuesType) => {
-        sendMessage(value.message)
-
-    }
-
+export const AddMessageForm: React.FC<AddMessageFormikPropsType>  = ({sendMessage, placeholder}) => {
+    const initialValues: MyFormValues = { message: '' };
     return (
-        <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, form }) => (
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <Field name="message" component={TextAreaInput} placeholder="Enter your message" />
-                    </div>
-                    <div>
-                        <button type="submit">Send</button>
-                    </div>
-                </form>
-            )}
-        />
-    )
-}
-
-export default AddMessageForm
+        <div>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={(values) => {
+                    sendMessage(values.message)
+                }}
+            >
+                <Form>
+                    <Field name="message" placeholder={placeholder} />
+                    <button type="submit">Submit</button>
+                </Form>
+            </Formik>
+        </div>
+    );
+};
