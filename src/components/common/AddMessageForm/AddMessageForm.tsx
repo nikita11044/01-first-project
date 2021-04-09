@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {
     Formik,
-    Form,
     useField, FormikProps,
 } from 'formik';
+import * as Yup from 'yup';
 
 type AddMessageFormikPropsType = {
     sendMessage: (message: string) => void
@@ -19,12 +19,18 @@ interface MyFormValues {
     message: string;
 }
 
+const MessageValidationSchema = Yup.object().shape({
+    message: Yup.string()
+        .required('Required')
+})
+
 export const AddMessageForm: React.FC<AddMessageFormikPropsType> = ({sendMessage, placeholder}) => {
     const initialValues: MyFormValues = {message: ''};
     return (
         <div>
             <Formik
                 initialValues={initialValues}
+                validationSchema={MessageValidationSchema}
                 onSubmit={(values, formikHelpers) => {
                     sendMessage(values.message)
                     formikHelpers.resetForm()
