@@ -2,16 +2,16 @@ import React from "react";
 import {connect} from "react-redux";
 import Preloader from "../common/Preloader/Preloader";
 import {AppStateType} from "../../redux/redux-store";
-import {follow, getUsers, IUser, unfollow} from "../../redux/users-reducer";
+import {follow, getUsers, User, unfollow} from "../../redux/users-reducer";
 import Users from "./Users";
 import {actions} from "../../redux/action-creators";
 
 type StateType = {
-    users: IUser[]
+    users: User[]
 }
 
 type MapStateToPropsType = {
-    users: IUser[]
+    users: User[]
     totalUsersCount: number
     pageSize: number
     currentPage: number
@@ -22,7 +22,7 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     follow: (userID: string) => void
     unfollow: (userID: string) => void
-    setUsers: (users: Array<IUser>) => void
+    setUsers: (users: Array<User>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void

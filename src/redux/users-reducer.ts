@@ -3,7 +3,7 @@ import {AppStateType} from "./redux-store";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {usersAPI} from "../api/api";
 
-export interface IUser {
+export type User = {
     name: string
     id: string
     photos: {
@@ -15,7 +15,7 @@ export interface IUser {
 }
 
 let initialState = {
-    users: [] as Array<IUser>,
+    users: [] as Array<User>,
     totalUsersCount: 20,
     pageSize: 5,
     currentPage: 1,
