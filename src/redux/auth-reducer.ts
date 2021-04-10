@@ -12,13 +12,11 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionTypes) => {
+export const authReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case "SET-USER-DATA": {
             return {
-                ...state,
-                ...action.data,
-                isAuth: true
+                ...action.payload
             }
         }
         default: {
@@ -35,8 +33,24 @@ export const isAuthorized = (): ThunkType => {
             .then(response => {
                 if (response.data.resultCode === 0) {
                     const {email, id, login} = response.data.data
-                    dispatch(actions.setData(id, email, login))
+                    dispatch(actions.setUserData(id, email, login, true))
                 }
             })
     }
+}
+
+export const login = (email: string, password: string, rememberMe?: boolean) => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(isAuthorized())
+            }
+        })
+}
+
+export const logout = () => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    authAPI.logout()
+        .then(response => {
+            dispatch(actions.setUserData(NaN, '', '', false))
+        })
 }

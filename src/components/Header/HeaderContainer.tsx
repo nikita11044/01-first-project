@@ -11,7 +11,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    setData: (userID: number, email: string, login: string) => void
+    setUserData: (id: number, email: string, login: string, isAuth: boolean) => void
     isAuthorized: () => void
 }
 
@@ -36,10 +36,10 @@ class HeaderContainer extends React.Component<PropsType, any> {
 function mapStateToProps(state: AppStateType): MapStateToPropsType {
     return {
         isAuth: state.auth.isAuth,
-        login: state.auth.login
+        login: state.auth.login,
     }
 }
 
-const {setData} = actions
+const {setUserData} = actions
 
-export default connect(mapStateToProps, {setData, isAuthorized})(HeaderContainer)
+export default connect(mapStateToProps, {setUserData, isAuthorized})(HeaderContainer)

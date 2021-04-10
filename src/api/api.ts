@@ -37,6 +37,12 @@ export const usersAPI = {
 export const authAPI = {
     isAuthorized: () => {
         return instance.get<CommonResponseType<{ id: number, email: string, login: string }>>('auth/me')
+    },
+    login: (email: string, password: string, rememberMe?: boolean) => {
+        return instance.post<CommonResponseType<{}>>('auth/login', {email, password, rememberMe})
+    },
+    logout: () => {
+        return instance.delete<CommonResponseType<{}>>('auth/login')
     }
 }
 
