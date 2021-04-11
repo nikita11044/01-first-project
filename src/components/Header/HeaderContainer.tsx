@@ -3,16 +3,17 @@ import {connect} from "react-redux";
 import Header from "./Header";
 import {AppStateType} from "../../redux/redux-store";
 import {actions} from "../../redux/action-creators";
-import {isAuthorized} from "../../redux/auth-reducer";
+import {isAuthorized, logout} from "../../redux/auth-reducer";
 
 type MapStateToPropsType = {
-    login: string
+    login: string | null
     isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
     setUserData: (id: number, email: string, login: string, isAuth: boolean) => void
     isAuthorized: () => void
+    logout: () => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -42,4 +43,4 @@ function mapStateToProps(state: AppStateType): MapStateToPropsType {
 
 const {setUserData} = actions
 
-export default connect(mapStateToProps, {setUserData, isAuthorized})(HeaderContainer)
+export default connect(mapStateToProps, {setUserData, isAuthorized, logout})(HeaderContainer)

@@ -13,7 +13,7 @@ export const actions = {
     sendMessage: (message: string) => ({type: 'SEND-MESSAGE' as const, message: message}),
     addPost: (post: string) => ({type: 'ADD-POST' as const, post: {id: v1(), message: post, likesCount: 0}}),
     setUserProfile: (profile: UserProfileType) => ({type: 'SET-USER-PROFILE' as const, profile}),
-    setUserData: (id: number, email: string, login: string, isAuth: boolean) => ({type: 'SET-USER-DATA' as const, payload: {id, email, login, isAuth}}),
+    setUserData: (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({type: 'SET-USER-DATA' as const, payload: {id, email, login, isAuth}}),
     setStatus: (status: string) => ({type: 'SET-STATUS' as const, status}),
 }
 

@@ -10,7 +10,12 @@ let initialState = {
     isAuth: false
 }
 
-type InitialStateType = typeof initialState
+type InitialStateType = {
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
+}
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
@@ -51,6 +56,6 @@ export const login = (email: string, password: string, rememberMe?: boolean) => 
 export const logout = () => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
     authAPI.logout()
         .then(response => {
-            dispatch(actions.setUserData(NaN, '', '', false))
+            dispatch(actions.setUserData(null, null, null, false))
         })
 }
