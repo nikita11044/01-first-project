@@ -35,7 +35,7 @@ export const usersAPI = {
 }
 
 export const authAPI = {
-    isAuthorized: () => {
+    getAuthUserData: () => {
         return instance.get<CommonResponseType<{ id: number, email: string, login: string }>>('auth/me')
     },
     login: (email: string, password: string, rememberMe?: boolean) => {

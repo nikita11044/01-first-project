@@ -15,6 +15,7 @@ export const actions = {
     setUserProfile: (profile: UserProfileType) => ({type: 'SET-USER-PROFILE' as const, profile}),
     setUserData: (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({type: 'SET-USER-DATA' as const, payload: {id, email, login, isAuth}}),
     setStatus: (status: string) => ({type: 'SET-STATUS' as const, status}),
+    setInitialized: () => ({type: 'SET-INITIALIZED' as const})
 }
 
 type InferActionTypes<T> = T extends {[key: string]: infer U} ? U : never

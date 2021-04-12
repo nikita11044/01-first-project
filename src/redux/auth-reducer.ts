@@ -32,9 +32,9 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const isAuthorized = (): ThunkType => {
+export const getAuthUserData = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-        authAPI.isAuthorized()
+        authAPI.getAuthUserData()
             .then(response => {
                 if (response.data.resultCode === 0) {
                     const {email, id, login} = response.data.data
@@ -44,16 +44,16 @@ export const isAuthorized = (): ThunkType => {
     }
 }
 
-export const login = (email: string, password: string, rememberMe?: boolean) => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+export const login = (email: string, password: string, rememberMe?: boolean): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
     authAPI.login(email, password, rememberMe)
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(isAuthorized())
+                dispatch(getAuthUserData())
             }
         })
 }
 
-export const logout = () => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+export const logout = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
     authAPI.logout()
         .then(response => {
             dispatch(actions.setUserData(null, null, null, false))

@@ -45,35 +45,6 @@ export type UserProfileType = {
     }
 }
 
-// let initialState = {
-//     newPostText: '',
-//     posts: [
-//         {id: v1(), message: 'Hi, how are you?', likesCount: 12},
-//         {id: v1(), message: "It's my first post", likesCount: 11}
-//     ],
-//     profile: {
-//         aboutMe: '',
-//         contacts: {
-//             "facebook": '',
-//             "website": '',
-//             "vk": '',
-//             "twitter": '',
-//             "instagram": '',
-//             "youtube": '',
-//             "github": '',
-//             "mainLink": '',
-//         },
-//         lookingForAJob: false,
-//         lookingForAJobDescription: '',
-//         fullName: '',
-//         userId: 2,
-//         photos: {
-//             small: '',
-//             large: ''
-//         }
-//     }
-// }
-
 let initialState = {
     posts: [
         {id: v1(), message: 'Hi, how are you?', likesCount: 12},
