@@ -11,6 +11,10 @@ type MapStateToPropsType = {
     isAuth: boolean
 }
 
+type MapDispatchToPropsType = {
+    login: (email: string, password: string, rememberMe?: boolean) => void
+}
+
 type LoginPropsType = {
     isAuth: boolean
     login: (email: string, password: string, rememberMe?: boolean) => void
@@ -72,4 +76,4 @@ const LoginForm: React.FC<LoginFormPropsType> = ({login}) => {
 }
 
 
-export default connect(mapStateToProps, {login})(Login)
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {login})(Login)

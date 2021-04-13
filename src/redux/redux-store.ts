@@ -3,6 +3,7 @@ import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer from "./users-reducer";
 import {authReducer} from "./auth-reducer";
+import {appReducer} from "./app-reducer"
 import thunkMiddleware from "redux-thunk";
 
 const reducers = combineReducers({
@@ -10,6 +11,7 @@ const reducers = combineReducers({
     dialogs: dialogsReducer,
     users: usersReducer,
     auth: authReducer,
+    app: appReducer
 })
 
 type RootReducerType = typeof reducers

@@ -24,9 +24,7 @@ type MapDispatchToPropsType = {
     updateStatus: (newStatus: string) => void
 }
 
-type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType
-
-type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
+type PropsType = RouteComponentProps<PathParamsType> & MapStateToPropsType & MapDispatchToPropsType
 
 class ProfileContainer extends React.Component<PropsType> {
 
@@ -54,7 +52,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)

@@ -13,30 +13,43 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import ProfileContainer from './components/Profile/ProfileContainer';
 import {initializeApp} from "./redux/app-reducer";
+import {AppStateType} from "./redux/redux-store";
 
-type AppPropsType = {
+
+type MapStateToPropsType = {
+    initialized: boolean
+}
+
+type MapDispatchToPropsType = {
     initializeApp: () => void
 }
 
-class App extends React.Component<AppPropsType> {
+type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
-
+class App extends React.Component<PropsType> {
     render() {
         return (
-            <div className='app-wrapper'>
+            <div className="app-wrapper">
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
+                    <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                     <Route path='/dialogs' render={() => <DialogsContainer/>}/>
                     <Route path='/users' render={() => <UsersContainer/>}/>
                     <Route path='/login' render={() => <Login/>}/>
                 </div>
             </div>
+
         );
     }
 }
 
-export default compose<React.ComponentType> (
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        initialized: state.app.initialized
+    }
+}
+
+export default compose<React.ComponentType>(
     withRouter,
-    connect(null, {initializeApp}))(App)
+    connect(mapStateToProps, {initializeApp}))(App)
