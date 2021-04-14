@@ -12,16 +12,16 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe?: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean) => void
 }
 
 type LoginPropsType = {
     isAuth: boolean
-    login: (email: string, password: string, rememberMe?: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean) => void
 }
 
 type LoginFormPropsType = {
-    login: (email: string, password: string, rememberMe?: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {

@@ -26,6 +26,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const initializeApp: ThunkType = () => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-    dispatch(getAuthUserData())
+export const initializeApp = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    let promise = dispatch(getAuthUserData())
+    Promise.all([promise]).then(() => {dispatch(actions.setInitialized)})
 }
