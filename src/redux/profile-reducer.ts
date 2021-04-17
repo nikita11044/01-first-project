@@ -70,20 +70,6 @@ type InitialStateType = typeof initialState
 const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case "ADD-POST": {
-            // if (state.newPostText === '') {
-            //     return state
-            // }
-            // const oldPosts = state.posts
-            // const newPost = {
-            //     id: v1(),
-            //     message: state.newPostText,
-            //     likesCount: 0
-            // }
-            // return {
-            //     ...state,
-            //     newPostText: '',
-            //     posts: [...oldPosts, newPost]
-            // }
             return {
                 ...state,
                 posts: [action.post, ...state.posts]
@@ -108,7 +94,7 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const getUserProfile = (userId: string): ThunkType => {
+export const requestUserProfile = (userId: string): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
         profileAPI.getUserProfile(userId)
             .then(response => {
@@ -118,7 +104,7 @@ export const getUserProfile = (userId: string): ThunkType => {
     }
 }
 
-export const getStatus = (userId: string): ThunkType => {
+export const requestStatus = (userId: string): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
         profileAPI.getStatus(userId)
             .then(response => dispatch(actions.setStatus(response.data)))

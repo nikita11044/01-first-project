@@ -12,9 +12,9 @@ import Login from "./components/Login/Login";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import ProfileContainer from './components/Profile/ProfileContainer';
-import {initializeApp} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
+import {initializeApp} from "./redux/app-reducer";
 
 
 type MapStateToPropsType = {
@@ -34,7 +34,9 @@ class App extends React.Component<PropsType> {
     }
 
     render() {
-        if (!this.props.initialized) return <Preloader/>
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
         return (
                 <div className="app-wrapper">
                     <HeaderContainer/>
@@ -59,4 +61,4 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export default compose<React.ComponentType>(
     withRouter,
-    connect(mapStateToProps, {initializeApp}))(App)
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App)

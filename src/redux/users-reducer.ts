@@ -82,7 +82,7 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const getUsers = (currentPage: number, pageSize: number):ThunkType => {
+export const requestUsers = (currentPage: number, pageSize: number):ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
         dispatch(actions.toggleIsFetching(true))
         usersAPI.getUsers(currentPage, pageSize)

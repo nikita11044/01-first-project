@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Redirect} from "react-router-dom";
+import {getIsAuth} from "../../redux/auth-selectors";
 
 type MapStateToPropsType = {
     isAuth: boolean
@@ -26,7 +27,7 @@ type LoginFormPropsType = {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: getIsAuth(state)
     }
 }
 
