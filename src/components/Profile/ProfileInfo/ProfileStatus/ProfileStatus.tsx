@@ -5,10 +5,19 @@ type PropsType = {
     updateStatus: (newStatus: string) => void
 }
 
+type ProfileStateType = {
+    editMode: boolean
+    status: string
+}
+
 class ProfileStatus extends React.Component<PropsType> {
     state = {
         editMode: false,
         status: this.props.status
+    }
+
+    shouldComponentUpdate(nextProps: Readonly<PropsType>, nextState: Readonly<ProfileStateType>): boolean {
+        return nextProps !== this.props || nextState !== this.state
     }
 
     activateEditMode = () => {

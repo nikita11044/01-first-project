@@ -6,17 +6,17 @@ export type MessagePropsType = {
     likesCount: number
 }
 
-const Post: React.FC<MessagePropsType> = ({message, likesCount}) => {
+const Post: React.FC<MessagePropsType> = React.memo(({message, likesCount}) => {
     return (
         <div className={classes.item}>
             <img src="https://www.cheltv.ru/wp-content/uploads/2018/05/egikG.jpg" alt=""/>
-                {message}
+            {message}
             <div>
                 <span>like</span>
                 <span>{likesCount}</span>
             </div>
         </div>
     );
-};
+})
 
 export default Post;

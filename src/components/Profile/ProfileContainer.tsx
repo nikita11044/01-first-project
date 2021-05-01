@@ -7,8 +7,8 @@ import {RouteComponentProps} from "react-router"
 import {requestUserProfile, requestStatus, updateStatus, UserProfileType} from "../../redux/profile-reducer";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import { compose } from 'redux';
-import {getProfile, getStatus} from "../../redux/profile-selectors";
-import {getAuthorizedUserId, getIsAuth} from "../../redux/auth-selectors";
+import {getProfile, getStatus} from "../../redux/selectors/profile-selectors";
+import {getAuthorizedUserId, getIsAuth} from "../../redux/selectors/auth-selectors";
 
 type PathParamsType = {
     userId: string | undefined

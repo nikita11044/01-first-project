@@ -4,7 +4,7 @@ import Header from "./Header";
 import {AppStateType} from "../../redux/redux-store";
 import {actions} from "../../redux/action-creators";
 import {logout} from "../../redux/auth-reducer";
-import {getIsAuth, getLogin} from "../../redux/auth-selectors";
+import {getIsAuth, getLogin} from "../../redux/selectors/auth-selectors";
 
 type MapStateToPropsType = {
     login: string | null

@@ -11,31 +11,31 @@ export type DialogsPropsType = {
     sendMessage: (message: string) => void
 }
 
-const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, sendMessage}) => {
+const Dialogs: React.FC<DialogsPropsType> = React.memo(({dialogs, messages, sendMessage}) => {
 
-    const dialogElements = dialogs.map(el => {
-        return <DialogItem key={el.id} name={el.name} id={el.id}/>
-    })
+        const dialogElements = dialogs.map(el => {
+            return <DialogItem key={el.id} name={el.name} id={el.id}/>
+        })
 
-    const messagesElements = messages.map(el => {
-        return <MessageItem key={el.id} message={el.message} />
-    })
+        const messagesElements = messages.map(el => {
+            return <MessageItem key={el.id} message={el.message} />
+        })
 
-    return (
-        <div className={classes.dialogs}>
-            <div className={classes.dialogsItems}>
-                {
-                    dialogElements
-                }
-            </div>
-            <div className={classes.messages}>
-                <div>{messagesElements}</div>
-                <div>
-                    <AddMessageForm sendMessage={sendMessage} placeholder={'Enter you message'}/>
+        return (
+            <div className={classes.dialogs}>
+                <div className={classes.dialogsItems}>
+                    {
+                        dialogElements
+                    }
+                </div>
+                <div className={classes.messages}>
+                    <div>{messagesElements}</div>
+                    <div>
+                        <AddMessageForm sendMessage={sendMessage} placeholder={'Enter you message'}/>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-}
-
+        );
+    }
+)
 export default Dialogs;

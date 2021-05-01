@@ -5,12 +5,12 @@ export type MessageItemPropsType = {
     message: string
 }
 
-const MessageItem: React.FC<MessageItemPropsType> = ({message}) => {
+const MessageItem: React.FC<MessageItemPropsType> = React.memo(({message}) => {
     return (
         <div className={classes.message}>
             {message}
         </div>
     );
-}
+})
 
 export default MessageItem;

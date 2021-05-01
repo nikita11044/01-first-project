@@ -98,7 +98,6 @@ export const requestUserProfile = (userId: string): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
         profileAPI.getUserProfile(userId)
             .then(response => {
-                console.log(response)
                 dispatch(actions.setUserProfile(response.data))
             })
     }

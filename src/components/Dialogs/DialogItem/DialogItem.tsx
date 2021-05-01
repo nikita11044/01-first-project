@@ -7,7 +7,7 @@ export type DialogItemPropsType = {
     id: string
 }
 
-const DialogItem: React.FC<DialogItemPropsType> = ({name, id}) => {
+const DialogItem: React.FC<DialogItemPropsType> = React.memo(({name, id}) => {
     return (
         <div className={classes.dialog}>
             <NavLink to={`/dialogs/${id}`}>
@@ -15,6 +15,6 @@ const DialogItem: React.FC<DialogItemPropsType> = ({name, id}) => {
             </NavLink>
         </div>
     );
-}
+})
 
 export default DialogItem;

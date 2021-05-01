@@ -4,14 +4,15 @@ import classes from './ProfileInfo.module.css';
 import {UserProfileType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
+import {ProfileStatusFunctional} from "./ProfileStatus/ProfileStatusFunctional";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType
-    status: string
+    status: string | null
     updateStatus: (newStatus: string) => void
 }
 
-const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus}) => {
+const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({profile, status, updateStatus}) => {
     if(profile.userId === 0) {
         return <Preloader />
     }
@@ -26,7 +27,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
                     <div className={classes.userNameBlock}>
                         <h3>{profile.fullName}</h3>
                         <p>{profile.aboutMe}</p>
-                        <ProfileStatus status={status} updateStatus={updateStatus}/>
+                        <ProfileStatusFunctional status={status} updateStatus={updateStatus}/>
                     </div>
                 </div>
                 <ul>
@@ -46,6 +47,6 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
             </div>
         </div>
     );
-}
+})
 
 export default ProfileInfo;

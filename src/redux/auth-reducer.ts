@@ -32,7 +32,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const getAuthUserData = (): ThunkAction<void, AppStateType, unknown, ActionTypes> => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+export const getAuthUserData = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
     return authAPI.getAuthUserData()
         .then(response => {
             if (response.data.resultCode === 0) {

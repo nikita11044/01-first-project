@@ -1,5 +1,5 @@
-import {AppStateType} from "./redux-store";
-import {UserProfileType} from "./profile-reducer";
+import {AppStateType} from "../redux-store";
+import {UserProfileType} from "../profile-reducer";
 
 export const getProfile = (state: AppStateType): UserProfileType => {
     return state.profile.profile

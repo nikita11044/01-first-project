@@ -9,17 +9,6 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch: Dispatch<ProfileActionTypes>) => {
-//     return {
-//         addPost: () => {
-//             dispatch(AddPostAC())
-//         },
-//         updateNewPostText: (e: ChangeEvent<HTMLTextAreaElement>) => {
-//             dispatch(UpdatePostTextAC(e.currentTarget.value))
-//         }
-//     }
-// }
-
 const {addPost} = actions
 
 const MyPostsContainer = connect(mapStateToProps, {addPost})(MyPosts)

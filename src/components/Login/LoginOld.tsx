@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import styles from './Login.module.css';
 import {useFormik} from "formik";
 import * as Yup from 'yup';
@@ -6,19 +6,14 @@ import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Redirect} from "react-router-dom";
-import {getIsAuth} from "../../redux/auth-selectors";
+import {getIsAuth} from "../../redux/selectors/auth-selectors";
 
 type MapStateToPropsType = {
     isAuth: boolean
 }
 
-type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe: boolean) => void
-}
-
 type LoginPropsType = {
     isAuth: boolean
-    login: (email: string, password: string, rememberMe: boolean) => void
 }
 
 type LoginFormPropsType = {
@@ -31,7 +26,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-const Login: React.FC<LoginPropsType> = ({isAuth, login}) => {
+const LoginOld: React.FC<LoginPropsType> = ({isAuth}) => {
 
     if (isAuth) {
         return <Redirect to="/profile"/>
@@ -77,4 +72,4 @@ const LoginForm: React.FC<LoginFormPropsType> = ({login}) => {
 }
 
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {login})(Login)
+export default connect<MapStateToPropsType, {}, {}, AppStateType>(mapStateToProps, {})(LoginOld)

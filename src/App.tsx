@@ -8,13 +8,16 @@ import {Route, withRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
+import Login from "./components/Login/LoginOld";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import ProfileContainer from './components/Profile/ProfileContainer';
 import {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
+import {getInitialized} from "./redux/selectors/app-selectors";
+import { LoginNew } from './components/Login/LoginNew';
+
 
 
 type MapStateToPropsType = {
@@ -45,7 +48,7 @@ class App extends React.Component<PropsType> {
                         <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                         <Route path='/dialogs' render={() => <DialogsContainer/>}/>
                         <Route path='/users' render={() => <UsersContainer/>}/>
-                        <Route path='/login' render={() => <Login/>}/>
+                        <Route path='/login' render={() => <LoginNew/>}/>
                     </div>
                 </div>
 
@@ -55,7 +58,7 @@ class App extends React.Component<PropsType> {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        initialized: state.app.initialized
+        initialized: getInitialized(state)
     }
 }
 

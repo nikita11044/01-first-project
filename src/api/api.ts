@@ -54,6 +54,6 @@ export const profileAPI = {
         return instance.get(`profile/status/${userId}`)
     },
     updateStatus: (data: {status: string}) => {
-        return instance.put<CommonResponseType<{}>>('status', data)
+        return instance.put<CommonResponseType<{}>>('profile/status', data)
     }
 }

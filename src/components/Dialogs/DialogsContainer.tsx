@@ -6,11 +6,7 @@ import {actions} from "../../redux/action-creators";
 import {DialogsType, MessageType} from "../../redux/dialogs-reducer";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
-
-type StateType = {
-    dialogs: DialogsType[]
-    messages: MessageType[]
-}
+import {getIsAuth} from "../../redux/selectors/auth-selectors";
 
 type MapStateToPropsType = {
     dialogs: DialogsType[]
@@ -24,7 +20,7 @@ type MapDispatchToPropsType = {
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
-class DialogsContainer extends React.Component<PropsType, StateType> {
+class DialogsContainer extends React.Component<PropsType> {
     render() {
         return <Dialogs
         dialogs={this.props.dialogs}
@@ -37,24 +33,13 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dialogs: state.dialogs.dialogs,
         messages: state.dialogs.messages,
-        isAuth: state.auth.isAuth
+        isAuth: getIsAuth(state)
     }
 }
-
-// const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>) => {
-//     return {
-//         onClickSendMessage: () => {
-//             dispatch(actions.sendMessage())
-//         },
-//         onNewMessageChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
-//             dispatch(actions.updateNewMessageBody(e.currentTarget.value))
-//         }
-//     }
-// }
 
 const {sendMessage} = actions
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {sendMessage}),
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {sendMessage}),
     withAuthRedirect
 )(DialogsContainer)

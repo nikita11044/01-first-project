@@ -6,15 +6,11 @@ import {AddMessageForm} from "../../common/AddMessageForm/AddMessageForm";
 
 
 export type MyPostsPropsType = {
-    // posts: Array<PostsType>
-    // newPostText: string
-    // addPost: () => void
-    // updatePostText: (e: ChangeEvent<HTMLTextAreaElement>) => void
     posts: Array<PostsType>
     addPost: (post: string) => void
 }
 
-const MyPosts: React.FC<MyPostsPropsType> = ({posts, addPost}) => {
+const MyPosts: React.FC<MyPostsPropsType> = React.memo(({posts, addPost}) => {
     const postsElements = posts.map(el => {
         return  <Post key={el.id} message={el.message} likesCount={el.likesCount}/>
     })
@@ -32,6 +28,6 @@ const MyPosts: React.FC<MyPostsPropsType> = ({posts, addPost}) => {
             </div>
         </>
     );
-}
+})
 
 export default MyPosts;
