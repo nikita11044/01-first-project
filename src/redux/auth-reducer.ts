@@ -32,28 +32,22 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const getAuthUserData = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-    return authAPI.getAuthUserData()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                const {email, id, login} = response.data.data
-                dispatch(actions.setUserData(id, email, login, true))
-            }
-        })
+export const getAuthUserData = (): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    let response = await authAPI.getAuthUserData()
+    if (response.data.resultCode === 0) {
+        const {email, id, login} = response.data.data
+        dispatch(actions.setUserData(id, email, login, true))
+    }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-    authAPI.login(email, password, rememberMe)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserData())
-            }
-        })
+export const login = (email: string, password: string, rememberMe: boolean): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    let response = await authAPI.login(email, password, rememberMe)
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    }
 }
 
-export const logout = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-    authAPI.logout()
-        .then(response => {
-            dispatch(actions.setUserData(null, null, null, false))
-        })
+export const logout = (): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    let response = await authAPI.logout()
+    dispatch(actions.setUserData(null, null, null, false))
 }

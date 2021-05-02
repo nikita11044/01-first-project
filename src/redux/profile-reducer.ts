@@ -10,31 +10,9 @@ export type PostsType = {
     likesCount: number
 }
 
-// export type UserProfileType = {
-//     aboutMe: string
-//     contacts: {
-//         facebook: string,
-//         website: string,
-//         vk: string,
-//         twitter: string,
-//         instagram: string,
-//         youtube: string,
-//         github: string,
-//         mainLink: string
-//     }
-//     lookingForAJob: boolean
-//     lookingForAJobDescription: string
-//     fullName: string
-//     userId: number
-//     photos: {
-//         small: string
-//         large: string
-//     }
-// }
-
 export type UserProfileType = {
     aboutMe: string,
-    contacts: {[key: string]: string},
+    contacts: { [key: string]: string },
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
@@ -94,26 +72,22 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const requestUserProfile = (userId: string): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-        profileAPI.getUserProfile(userId)
-            .then(response => {
-                dispatch(actions.setUserProfile(response.data))
-            })
+export const requestUserProfile = (userId: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    let response = await profileAPI.getUserProfile(userId)
+    dispatch(actions.setUserProfile(response.data))
+}
+
+export const requestStatus = (userId: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    let response = await profileAPI.getStatus(userId)
+    if (response.data.resultCode === 0) {
+        dispatch(actions.setStatus(response.data))
     }
 }
 
-export const requestStatus = (userId: string): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-        profileAPI.getStatus(userId)
-            .then(response => dispatch(actions.setStatus(response.data)))
-    }
-}
-
-export const updateStatus = (newStatus: string): ThunkType  => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-        profileAPI.updateStatus({status: newStatus})
-            .then(() => dispatch(actions.setStatus(newStatus)))
+export const updateStatus = (newStatus: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    let response = await profileAPI.updateStatus({status: newStatus})
+    if (response.data.resultCode === 0) {
+        dispatch(actions.setStatus(newStatus))
     }
 }
 

@@ -82,37 +82,29 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-export const requestUsers = (currentPage: number, pageSize: number):ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-        dispatch(actions.toggleIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(actions.setUsers(data.data.items))
-                dispatch(actions.setTotalUsersCount(data.data.totalCount))
-                dispatch(actions.toggleIsFetching(false))
-            })
+export const requestUsers = (currentPage: number, pageSize: number): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    dispatch(actions.toggleIsFetching(true))
+    let data = await usersAPI.getUsers(currentPage, pageSize)
+    dispatch(actions.setUsers(data.data.items))
+    dispatch(actions.setTotalUsersCount(data.data.totalCount))
+    dispatch(actions.toggleIsFetching(false))
+}
+
+export const follow = (userId: string): ThunkType => () => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    dispatch(actions.toggleFollowingInProgress(true, userId))
+    let response =  await usersAPI.follow(userId)
+    if (response.data.resultCode === 0) {
+        dispatch(actions.followSuccess(userId))
+        dispatch(actions.toggleFollowingInProgress(false, userId))
     }
 }
 
-export const follow = (userId: string): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-        dispatch(actions.toggleFollowingInProgress(true, userId))
-        usersAPI.follow(userId)
-            .then(() => {
-                dispatch(actions.followSuccess(userId))
-                dispatch(actions.toggleFollowingInProgress(false, userId))
-            })
-    }
-}
-
-export const unfollow = (userId: string): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-        dispatch(actions.toggleFollowingInProgress(true, userId))
-        usersAPI.unfollow(userId)
-            .then(() => {
-                dispatch(actions.unfollowSuccess(userId))
-                dispatch(actions.toggleFollowingInProgress(false, userId))
-            })
+export const unfollow = (userId: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    dispatch(actions.toggleFollowingInProgress(true, userId))
+    let response = await usersAPI.unfollow(userId)
+    if (response.data.resultCode === 0) {
+        dispatch(actions.unfollowSuccess(userId))
+        dispatch(actions.toggleFollowingInProgress(false, userId))
     }
 }
 
