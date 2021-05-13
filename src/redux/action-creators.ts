@@ -1,11 +1,11 @@
 import {UserProfileType} from "./profile-reducer";
-import {User} from "./users-reducer";
+import {UserType} from "./users-reducer";
 import {v1} from "uuid";
 
 export const actions = {
     followSuccess: (userID: string) => ({type: 'FOLLOW', id: userID} as const),
     unfollowSuccess: (userID: string) => ({type: 'UNFOLLOW', id: userID} as const),
-    setUsers: (users: Array<User>) => ({type: 'SET-USERS', users: users} as const),
+    setUsers: (users: Array<UserType>) => ({type: 'SET-USERS', users: users} as const),
     setCurrentPage: (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage} as const),
     setTotalUsersCount: (totalCount: number) => ({type: 'SET-TOTAL-USERS-COUNT', totalCount} as const),
     toggleIsFetching: (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', isFetching} as const),

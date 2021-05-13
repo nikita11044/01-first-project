@@ -1,9 +1,9 @@
 import axios from "axios";
-import {User} from "../redux/users-reducer";
+import {UserType} from "../redux/users-reducer";
 import {UserProfileType} from "../redux/profile-reducer";
 
 type GetUsersResponseType = {
-    items: User[]
+    items: UserType[]
     totalCount: number
     error: string | null
 }

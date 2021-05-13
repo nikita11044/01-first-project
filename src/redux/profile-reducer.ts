@@ -78,8 +78,9 @@ export const requestUserProfile = (userId: string): ThunkType => async (dispatch
 }
 
 export const requestStatus = (userId: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+
     let response = await profileAPI.getStatus(userId)
-    if (response.data.resultCode === 0) {
+    if (response.data !== null) {
         dispatch(actions.setStatus(response.data))
     }
 }

@@ -15,7 +15,7 @@ import {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 import {getInitialized} from "./redux/selectors/app-selectors";
-import { LoginNew } from './components/Login/LoginNew';
+import { Login } from './components/Login/Login';
 
 
 
@@ -47,7 +47,7 @@ class App extends React.Component<PropsType> {
                         <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                         <Route path='/dialogs' render={() => <DialogsContainer/>}/>
                         <Route path='/users' render={() => <UsersContainer/>}/>
-                        <Route path='/login' render={() => <LoginNew/>}/>
+                        <Route path='/login' render={() => <Login/>}/>
                     </div>
                 </div>
 

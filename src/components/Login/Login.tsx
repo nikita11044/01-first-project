@@ -12,7 +12,7 @@ type FormikErrorType = {
     rememberMe?: boolean
 }
 
-export const LoginNew = () => {
+export const Login = () => {
 
     const dispatch = useDispatch()
     const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
