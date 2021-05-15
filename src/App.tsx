@@ -4,14 +4,14 @@ import './components/Header/Header.module.css'
 import './components/Navbar/Navbar.module.css'
 import './components/Profile/Profile.module.css'
 import Navbar from "./components/Navbar/Navbar";
-import {Route, withRouter} from "react-router-dom";
+import {HashRouter, Route, withRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import ProfileContainer from './components/Profile/ProfileContainer';
-import {AppStateType} from "./redux/redux-store";
+import store, {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 import {getInitialized} from "./redux/selectors/app-selectors";
@@ -61,6 +61,19 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default compose<React.ComponentType>(
+// export default compose<React.ComponentType>(
+//     withRouter,
+//     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App)
+
+let AppContainer = compose<React.ComponentType>(
     withRouter,
     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App)
+
+let SocialNetworkApp = () => {
+    return <HashRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </HashRouter>
+}
+export default SocialNetworkApp
