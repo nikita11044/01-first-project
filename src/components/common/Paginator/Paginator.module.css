@@ -1,3 +1,8 @@
 .selectedPage {
+    border: 1px solid;
     font-weight: bold;
+}
+
+.pageNotSelected {
+    border: 1px solid;
 }
