@@ -5,18 +5,16 @@ import './components/Navbar/Navbar.module.css'
 import './components/Profile/Profile.module.css'
 import Navbar from "./components/Navbar/Navbar";
 import {HashRouter, Route, withRouter} from "react-router-dom";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
-import ProfileContainer from './components/Profile/ProfileContainer';
 import store, {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 import {getInitialized} from "./redux/selectors/app-selectors";
-import { Login } from './components/Login/Login';
-
+import {Login} from './components/Login/Login';
+import {withSuspense} from "./hoc/withSuspense";
 
 
 type MapStateToPropsType = {
@@ -29,6 +27,9 @@ type MapDispatchToPropsType = {
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
+
 class App extends React.Component<PropsType> {
 
     componentDidMount() {
@@ -40,18 +41,18 @@ class App extends React.Component<PropsType> {
             return <Preloader/>
         }
         return (
-                <div className="app-wrapper">
-                    <HeaderContainer/>
-                    <Navbar/>
-                    <div className='app-wrapper-content'>
-                        <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                        <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                        <Route path='/users' render={() => <UsersContainer/>}/>
-                        <Route path='/login' render={() => <Login/>}/>
-                    </div>
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <Navbar/>
+                <div className='app-wrapper-content'>
+                    <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
+                    <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
+                    <Route path='/users' render={() => <UsersContainer/>}/>
+                    <Route path='/login' render={() => <Login/>}/>
                 </div>
+            </div>
 
-            );
+        );
     }
 }
 
