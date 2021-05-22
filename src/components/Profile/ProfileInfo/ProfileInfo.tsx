@@ -1,18 +1,26 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import defaultUserAvatar from '../../../assets/default-user-avatar.jpg'
 import classes from './ProfileInfo.module.css';
 import {UserProfileType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus/ProfileStatus";
 import {ProfileStatusFunctional} from "./ProfileStatus/ProfileStatusFunctional";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType
     status: string | null
+    savePhoto: (file: File) => void
     updateStatus: (newStatus: string) => void
+    isOwner: boolean
 }
 
-const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({profile, status, updateStatus}) => {
+const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({profile, status, updateStatus, isOwner, savePhoto}) => {
+
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            savePhoto(e.target.files[0])
+        }
+    }
+
     if(profile.userId === 0) {
         return <Preloader />
     }
@@ -23,7 +31,8 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({profile, status
             </div>
             <div className={classes.descriptionBlock}>
                 <div className={classes.userDescription}>
-                    <img className={classes.userAvatar} src={profile.photos.large ? profile.photos.large : defaultUserAvatar} alt="user-avatar"/>
+                    <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar} alt="user-avatar"/>
+                    {isOwner && <input type="file" onChange={onMainPhotoSelected}/>}
                     <div className={classes.userNameBlock}>
                         <h3>{profile.fullName}</h3>
                         <p>{profile.aboutMe}</p>

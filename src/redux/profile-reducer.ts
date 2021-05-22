@@ -18,8 +18,8 @@ export type UserProfileType = {
     fullName: string,
     userId: number,
     photos: {
-        small: string,
-        large: string
+        small: string | null,
+        large: string | null
     }
 }
 
@@ -36,8 +36,8 @@ let initialState = {
         fullName: '',
         userId: 2,
         photos: {
-            small: '',
-            large: ''
+            small: '' as string | null,
+            large: '' as string | null
         }
     },
     status: ''
@@ -65,6 +65,12 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
                 status: action.status
             }
         }
+        case "SAVE-PHOTO-SUCCESS": {
+            return {
+                ...state,
+                profile:  {...state.profile, photos: {large: action.largePhotoURL, small: action.smallPhotoURL} }
+            }
+        }
         default:
             return state
     }
@@ -78,7 +84,6 @@ export const requestUserProfile = (userId: string): ThunkType => async (dispatch
 }
 
 export const requestStatus = (userId: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
-
     let response = await profileAPI.getStatus(userId)
     if (response.data !== null) {
         dispatch(actions.setStatus(response.data))
@@ -89,6 +94,15 @@ export const updateStatus = (newStatus: string): ThunkType => async (dispatch: T
     let response = await profileAPI.updateStatus({status: newStatus})
     if (response.data.resultCode === 0) {
         dispatch(actions.setStatus(newStatus))
+    }
+}
+
+export const savePhoto = (file: File): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    debugger
+    let response = await profileAPI.savePhoto(file)
+    if (response.data.resultCode === 0) {
+        const {large, small} = response.data.data
+        dispatch(actions.savePhotoSuccess(large, small))
     }
 }
 
