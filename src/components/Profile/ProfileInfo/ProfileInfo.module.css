@@ -28,3 +28,14 @@
     margin-left: 50px;
 }
 
+.contactsBlock {
+    margin-top: 60px;
+}
+
+.photoChangeBubble {
+    width: 280px;
+    height: 280px;
+    background-color: rgba(29,32,34,.7);
+    border: 2px solid #fff;
+    border-radius: 1rem;
+}
