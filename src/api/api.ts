@@ -56,6 +56,9 @@ export const profileAPI = {
     updateStatus: (data: {status: string}) => {
         return instance.put<CommonResponseType<{}>>('profile/status', data)
     },
+    updateProfile: (data: UpdateProfileDataType) => {
+        return instance.put<CommonResponseType<{}>>('profile', data)
+    },
     savePhoto: (file: File) => {
         const formData = new FormData()
         formData.append('photo', file)
@@ -64,5 +67,23 @@ export const profileAPI = {
                 'Content-Type' : 'multipart/form-data'
             }
         })
+    }
+}
+
+export type UpdateProfileDataType = {
+    userId: number
+    aboutMe: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
     }
 }
