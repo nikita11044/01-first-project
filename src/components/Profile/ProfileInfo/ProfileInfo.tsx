@@ -1,12 +1,9 @@
-import React, {ChangeEvent, createContext, useState} from 'react';
-import defaultUserAvatar from '../../../assets/default-user-avatar.jpg'
+import React, {ChangeEvent, useState} from 'react';
 import classes from './ProfileInfo.module.css';
 import {UserProfileType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
-import {ProfileStatusFunctional} from "./ProfileStatus/ProfileStatusFunctional";
-import {UserDescription} from '../UserDescription/UserDescription';
-import {UserDescriptionForm} from '../UserDescriptionForm/UserDescriptionForm';
-import {Provider} from "react-redux";
+import {UserDescription} from './UserDescription/UserDescription';
+import {UserDescriptionForm} from './UserDescriptionForm/UserDescriptionForm';
 
 type ProfileInfoPropsType = {
     profile: UserProfileType

@@ -1,7 +1,7 @@
 import React from "react";
-import {updateProfile, UserProfileType} from "../../../redux/profile-reducer";
-import classes from "../ProfileInfo/ProfileInfo.module.css";
-import defaultUserAvatar from "../../../assets/default-user-avatar.jpg";
+import {updateProfile, UserProfileType} from "../../../../redux/profile-reducer";
+import classes from "../ProfileInfo.module.css";
+import defaultUserAvatar from "../../../../assets/default-user-avatar.jpg";
 import {useFormik} from "formik";
 import {useDispatch} from "react-redux";
 import * as yup from 'yup'
