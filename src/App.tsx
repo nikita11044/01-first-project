@@ -4,17 +4,17 @@ import './components/Header/Header.module.css'
 import './components/Navbar/Navbar.module.css'
 import './components/Profile/Profile.module.css'
 import Navbar from "./components/Navbar/Navbar";
-import {HashRouter, Route, withRouter} from "react-router-dom";
-import UsersContainer from "./components/Users/UsersContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import {HashRouter, Route, withRouter, Switch} from "react-router-dom";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import store, {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 import {getInitialized} from "./redux/selectors/app-selectors";
-import {Login} from './components/Login/Login';
+import { Login } from './components/Login/Login';
 import {withSuspense} from "./hoc/withSuspense";
+import UsersContainer from './components/Users/UsersContainer';
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 
 type MapStateToPropsType = {

@@ -1,8 +1,9 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, createRef, useRef} from "react";
 import defaultUserAvatar from "../../../../assets/default-user-avatar.jpg";
 import {ProfileStatusFunctional} from "../ProfileStatus/ProfileStatusFunctional";
-import {UserProfileType} from "../../../../redux/profile-reducer";
+import {savePhoto, UserProfileType} from "../../../../redux/profile-reducer";
 import classes from "./UserDescription.module.css";
+import {Button, Checkbox, Divider, Dropdown, Layout, Menu, Typography, Upload} from "antd";
 
 type UserDescriptionPropsType = {
     profile: UserProfileType
@@ -18,6 +19,8 @@ type ContactPropsType = {
     value: string
 }
 
+const {Header, Content, Footer, Sider} = Layout;
+
 export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                                                                         profile,
                                                                         onMainPhotoSelected,
@@ -26,51 +29,66 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                                                                         updateStatus,
                                                                         toggleEditMode
                                                                     }) => {
+
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    const editUserDescriptionMenu = (
+        <Menu>
+            <Menu.Item key="1" style={ {textAlign: 'center'} }><Button onClick={toggleEditMode}>Edit</Button></Menu.Item>
+            <Menu.Item key="2">
+                <Button onClick={() => inputRef && inputRef.current && inputRef.current.click()}>
+                    Upload Photo
+                    <input ref={inputRef} hidden type="file" onChange={onMainPhotoSelected}/>
+                </Button>
+            </Menu.Item>
+        </Menu>
+    )
+
     return <>
-        <div className={classes.descriptionBlock}>
-            <div className={classes.userDescription}>
-                {isOwner && <button onClick={toggleEditMode}>Edit</button>}
-                <div className="img-wrapper">
-                    <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
-                         alt="user-avatar"/>
+        <Content className={classes.userDescription}>
+            <div className={classes.descriptionBlock + ' ' + classes.descriptionBlockLeft}>
+                <div className={classes.imgWrapper}>
                     {isOwner &&
-                    // <div className={classes.photoChangeBubble}>
-                    //     <input type="file" onChange={onMainPhotoSelected}/>
-                    // </div>
-                    <input type="file" onChange={onMainPhotoSelected}/>
+                    <Dropdown overlay={editUserDescriptionMenu} trigger={['contextMenu']}>
+                        <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
+                             alt="user-avatar"/>
+                    </Dropdown>
+                    || <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
+                           alt="user-avatar"/>
                     }
+                    <Typography.Text underline>Right click on photo to edit profile</Typography.Text>
                 </div>
-                <div className={classes.userNameBlock}>
-                    <h3>{profile.fullName}</h3>
+                <Typography>
+                    <Divider orientation="center">About me</Divider>
+                    <Typography.Paragraph
+                        className={classes.descriptionBlock_text}>{profile.aboutMe}</Typography.Paragraph>
+                </Typography>
+                <Typography>
+                    <Divider orientation="center">My skills</Divider>
+                    <Typography.Paragraph
+                        className={classes.descriptionBlock_text}>{profile.lookingForAJobDescription || 'none'}</Typography.Paragraph>
+                </Typography>
+            </div>
+            <div className={classes.descriptionBlock + '' + classes.descriptionBlockRight}>
+                <Typography className={classes.userNameBlock}>
+                    <Typography.Title level={1}>{profile.fullName}</Typography.Title>
                     <ProfileStatusFunctional status={status} updateStatus={updateStatus}/>
-                </div>
+                    {!profile.lookingForAJob && <Typography.Text type="success" strong>Open to work!</Typography.Text>}
+                </Typography>
+                <Typography className={classes.contactsBlock}>
+                    <Divider orientation="left">Contacts</Divider>
+                    <ul>
+                        {
+                            Object.keys(profile.contacts).map(key => {
+                                return <>
+                                    <Contact key={key} title={key} value={profile.contacts[key]}/>
+                                </>
+                            })
+                        }
+                    </ul>
+                </Typography>
             </div>
-        </div>
-        <div className={classes.userDescriptionWrapper}>
-            <div>
-                <h3>About me</h3>
-                <p>{profile.aboutMe}</p>
-            </div>
-            <div className={classes.contactsBlock}>
-                <h3>Contacts</h3>
-                <ul>
-                    {
-                        Object.keys(profile.contacts).map(key => {
-                            return <>
-                                <Contact key={key} title={key} value={profile.contacts[key]}/>
-                            </>
-                        })
-                    }
-                </ul>
-            </div>
-            <div>
-                {`Looking for a job: ${profile.lookingForAJob ? 'yes' : 'no'}`}
-            </div>
-            <div>
-                <h3>My professional skills</h3>
-                <p>{profile.lookingForAJobDescription || 'none'}</p>
-            </div>
-        </div>
+        </Content>
     </>
 }
 

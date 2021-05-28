@@ -1,6 +1,8 @@
+@import '~antd/dist/antd.css';
+
 body {
-    background-color: #edeef7;
-}
+    background: #f0f2f5;
+ }
 
 .app-wrapper {
     display: grid;
@@ -15,7 +17,7 @@ body {
 }
 
 .app-wrapper-content {
-    grid-area: c;
+    //grid-area: c;
     background-color: #fff;
     border-bottom: 1px solid #e6ecf5;
     border-radius: 5px;
@@ -27,3 +29,17 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
 }
 
+/*--------------------*/
+
+.logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+    background: #fff;
+}
+[data-theme="dark"] .site-layout .site-layout-background {
+    background: #141414;
+}

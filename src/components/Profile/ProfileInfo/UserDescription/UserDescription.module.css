@@ -1,43 +1,51 @@
-.descriptionBlock {
-    position: relative;
-    padding: 10px;
-}
-
 .userDescription {
-    display: flex;
-    position: absolute;
-    top: -233px;
-    left: 64px;
-    align-items: center;
-    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 0.9fr;
+    gap: 0px 100px;
+    grid-template-areas:
+    "Left Right";
 }
 
-.userAvatar {
-    width: 280px;
-    height: 280px;
-    border: 2px solid #fff;
-    border-radius: 1rem;
+.descriptionBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.imgWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.descriptionBlock-left {
+    grid-area: Left;
+}
+
+.descriptionBlock_text {
+    padding: 0px 25px;
+}
+
+.descriptionBlock-right {
+    grid-area: Right;
+
 }
 
 .userNameBlock {
-    margin-left: 50px;
-}
-
-.contactsBlock {
-    margin-top: 60px;
-}
-
-.photoChangeBubble {
-    width: 280px;
-    height: 280px;
-    background-color: rgba(29,32,34,.7);
-    border: 2px solid #fff;
-    border-radius: 1rem;
-}
-
-.userDescriptionWrapper {
+    margin: 20px 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 15px;
+}
+
+.userNameBlock h1 {
+    margin-bottom: 0;
+}
+
+.userAvatar {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #fff;
+    border-radius: 1rem;
 }

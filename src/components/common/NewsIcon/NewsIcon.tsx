@@ -1,6 +1,7 @@
 import * as React from "react"
+import Icon from "@ant-design/icons";
 
-function NewsIcon() {
+const NewsSvg = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -23,5 +24,7 @@ function NewsIcon() {
         </svg>
     )
 }
+
+const NewsIcon = (props: any) => <Icon component={NewsSvg} {...props}/>
 
 export default NewsIcon
