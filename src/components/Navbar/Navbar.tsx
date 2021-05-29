@@ -7,7 +7,7 @@ import {CommentOutlined, CustomerServiceFilled, ProfileOutlined, UserOutlined} f
 
 const Navbar = () => {
     return (
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+        <Menu theme="dark" mode="inline">
             <SubMenu key="sub1" icon={<ProfileOutlined />}title="Profile">
                 <Menu.Item key="1">
                     <NavLink to='/profile' activeClassName={classes.active}>My Page</NavLink>

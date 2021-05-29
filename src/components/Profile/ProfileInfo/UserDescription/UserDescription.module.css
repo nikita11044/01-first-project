@@ -49,3 +49,11 @@
     border: 2px solid #fff;
     border-radius: 1rem;
 }
+
+.alignBaseline {
+    align-items: baseline;
+}
+
+h4.ant-typography, .ant-typography h4 {
+    font-size: 15px;
+}

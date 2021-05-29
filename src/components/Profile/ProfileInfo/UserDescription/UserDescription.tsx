@@ -3,7 +3,17 @@ import defaultUserAvatar from "../../../../assets/default-user-avatar.jpg";
 import {ProfileStatusFunctional} from "../ProfileStatus/ProfileStatusFunctional";
 import {savePhoto, UserProfileType} from "../../../../redux/profile-reducer";
 import classes from "./UserDescription.module.css";
-import {Button, Checkbox, Divider, Dropdown, Layout, Menu, Typography, Upload} from "antd";
+import {Avatar, Button, Checkbox, Divider, Dropdown, Layout, List, Menu, Typography, Upload} from "antd";
+import {
+    FacebookOutlined,
+    GithubOutlined,
+    InstagramOutlined, LinkedinOutlined,
+    TwitterOutlined,
+    UserOutlined,
+    YoutubeOutlined
+} from "@ant-design/icons";
+import VkIcon from "../../../common/VkIcon/VkIcon";
+import WebsiteIcon from "../../../common/WebsiteIcon/WebsiteIcon";
 
 type UserDescriptionPropsType = {
     profile: UserProfileType
@@ -32,9 +42,35 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
 
     const inputRef = useRef<HTMLInputElement>(null)
 
+    const contactsData = Object.keys(profile.contacts).map(key => {
+        return {title: key, description: profile.contacts[key]}
+    })
+
+    const contactListAvatarHandler = (title: string) => {
+        switch (title) {
+            case 'facebook':
+                return <FacebookOutlined/>
+            case 'vk':
+                return <VkIcon/>
+            case 'website':
+                return <WebsiteIcon/>
+            case 'twitter':
+                return <TwitterOutlined/>
+            case 'instagram':
+                return <InstagramOutlined/>
+            case 'youtube':
+                return <YoutubeOutlined/>
+            case 'github':
+                return <GithubOutlined/>
+            case 'mainLink':
+                return <LinkedinOutlined/>
+        }
+    }
+
+
     const editUserDescriptionMenu = (
         <Menu>
-            <Menu.Item key="1" style={ {textAlign: 'center'} }><Button onClick={toggleEditMode}>Edit</Button></Menu.Item>
+            <Menu.Item key="1" style={{textAlign: 'center'}}><Button onClick={toggleEditMode}>Edit</Button></Menu.Item>
             <Menu.Item key="2">
                 <Button onClick={() => inputRef && inputRef.current && inputRef.current.click()}>
                     Upload Photo
@@ -54,7 +90,7 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                              alt="user-avatar"/>
                     </Dropdown>
                     || <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
-                           alt="user-avatar"/>
+                            alt="user-avatar"/>
                     }
                     <Typography.Text underline>Right click on photo to edit profile</Typography.Text>
                 </div>
@@ -77,15 +113,29 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                 </Typography>
                 <Typography className={classes.contactsBlock}>
                     <Divider orientation="left">Contacts</Divider>
-                    <ul>
-                        {
-                            Object.keys(profile.contacts).map(key => {
-                                return <>
-                                    <Contact key={key} title={key} value={profile.contacts[key]}/>
-                                </>
-                            })
-                        }
-                    </ul>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={contactsData}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    className={classes.alignBaseline}
+                                    avatar={contactListAvatarHandler(item.title)}
+                                    title={item.title}
+                                    description={item.description}
+                                />
+                            </List.Item>
+                        )}
+                    />,
+                    {/*<ul>*/}
+                    {/*    {*/}
+                    {/*        Object.keys(profile.contacts).map(key => {*/}
+                    {/*            return <>*/}
+                    {/*                <Contact key={key} title={key} value={profile.contacts[key]}/>*/}
+                    {/*            </>*/}
+                    {/*        })*/}
+                    {/*    }*/}
+                    {/*</ul>*/}
                 </Typography>
             </div>
         </Content>
