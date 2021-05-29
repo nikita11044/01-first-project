@@ -3,7 +3,7 @@ import defaultUserAvatar from "../../../../assets/default-user-avatar.jpg";
 import {ProfileStatusFunctional} from "../ProfileStatus/ProfileStatusFunctional";
 import {savePhoto, UserProfileType} from "../../../../redux/profile-reducer";
 import classes from "./UserDescription.module.css";
-import {Avatar, Button, Checkbox, Divider, Dropdown, Layout, List, Menu, Typography, Upload} from "antd";
+import {Avatar, Button, Checkbox, Divider, Dropdown, Layout, List, Menu, Table, Typography, Upload} from "antd";
 import {
     FacebookOutlined,
     GithubOutlined,
@@ -42,11 +42,7 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
 
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const contactsData = Object.keys(profile.contacts).map(key => {
-        return {title: key, description: profile.contacts[key]}
-    })
-
-    const contactListAvatarHandler = (title: string) => {
+    const contactIconHandler = (title: string) => {
         switch (title) {
             case 'facebook':
                 return <FacebookOutlined/>
@@ -66,6 +62,14 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                 return <LinkedinOutlined/>
         }
     }
+
+    const contactsData = Object.keys(profile.contacts).map((key, index) => {
+        const icon = contactIconHandler(key)
+
+        const description = profile.contacts[key] ? <a href={profile.contacts[key]}>View</a> : 'none'
+
+        return {key: index, icon: icon, title: key, description: description}
+    })
 
 
     const editUserDescriptionMenu = (
@@ -95,12 +99,12 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                     <Typography.Text underline>Right click on photo to edit profile</Typography.Text>
                 </div>
                 <Typography>
-                    <Divider orientation="center">About me</Divider>
+                    <Divider orientation="center" style={ {borderTopColor: '#00000054'} }>About me</Divider>
                     <Typography.Paragraph
                         className={classes.descriptionBlock_text}>{profile.aboutMe}</Typography.Paragraph>
                 </Typography>
                 <Typography>
-                    <Divider orientation="center">My skills</Divider>
+                    <Divider orientation="center" style={ {borderTopColor: '#00000054'} }>My skills</Divider>
                     <Typography.Paragraph
                         className={classes.descriptionBlock_text}>{profile.lookingForAJobDescription || 'none'}</Typography.Paragraph>
                 </Typography>
@@ -111,32 +115,23 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                     <ProfileStatusFunctional status={status} updateStatus={updateStatus}/>
                     {!profile.lookingForAJob && <Typography.Text type="success" strong>Open to work!</Typography.Text>}
                 </Typography>
-                <Typography className={classes.contactsBlock}>
-                    <Divider orientation="left">Contacts</Divider>
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={contactsData}
-                        renderItem={item => (
-                            <List.Item>
-                                <List.Item.Meta
-                                    className={classes.alignBaseline}
-                                    avatar={contactListAvatarHandler(item.title)}
-                                    title={item.title}
-                                    description={item.description}
-                                />
-                            </List.Item>
-                        )}
-                    />,
-                    {/*<ul>*/}
-                    {/*    {*/}
-                    {/*        Object.keys(profile.contacts).map(key => {*/}
-                    {/*            return <>*/}
-                    {/*                <Contact key={key} title={key} value={profile.contacts[key]}/>*/}
-                    {/*            </>*/}
-                    {/*        })*/}
-                    {/*    }*/}
-                    {/*</ul>*/}
-                </Typography>
+                <div className={classes.contactsBlock}>
+                    <Divider orientation="center" style={ {borderTopColor: '#00000054'} }>Contacts</Divider>
+                    <Table dataSource={contactsData} showHeader={false} pagination={false}>
+                        <Table.Column title="Icon"
+                                      dataIndex="icon"
+                                      key="icon"
+                        ></Table.Column>
+                        <Table.Column title="Title"
+                                      dataIndex="title"
+                                      key="title"
+                        ></Table.Column>
+                        <Table.Column title="Description"
+                                      dataIndex="description"
+                                      key="description"
+                        ></Table.Column>
+                    </Table>
+                </div>
             </div>
         </Content>
     </>

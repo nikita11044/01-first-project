@@ -3,9 +3,8 @@
     padding: 10px;
 }
 
-.coverContainer {
-    height: 280px;
-    background-image: url('../../../assets/bp-cover-image.jpg')
+.profileLayout {
+    background-color: #fff;
 }
 
 .userDescription {
@@ -28,7 +27,8 @@
     margin-left: 50px;
 }
 
-.contactsBlock {
+
+.contactsLists {
     margin-top: 60px;
 }
 

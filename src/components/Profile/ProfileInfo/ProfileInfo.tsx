@@ -56,7 +56,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({
     //     </div>
     // );
     return (
-        <Layout>
+        <Layout className={classes.profileLayout}>
             {editMode
             && <UserDescriptionForm
                 profile={profile}
