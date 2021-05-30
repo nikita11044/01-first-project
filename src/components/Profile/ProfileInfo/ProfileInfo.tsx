@@ -3,8 +3,8 @@ import classes from './ProfileInfo.module.css';
 import {UserProfileType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
 import {UserDescription} from './UserDescription/UserDescription';
-import {UserDescriptionForm} from './UserDescriptionForm/UserDescriptionForm';
-import {Image, Layout} from "antd";
+import {Layout} from "antd";
+import { UserDescriptionFormAntd } from './UserDescriptionFormAntd/UserDescriptionFormAntd';
 
 type ProfileInfoPropsType = {
     profile: UserProfileType
@@ -13,8 +13,6 @@ type ProfileInfoPropsType = {
     updateStatus: (newStatus: string) => void
     isOwner: boolean
 }
-
-const { Header, Content, Footer, Sider } = Layout;
 
 const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({
                                                                     profile,
@@ -35,30 +33,11 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({
     if (profile.userId === 0) {
         return <Preloader/>
     }
-    // return (
-    //     <div>
-    //         <div className={classes.coverContainer}></div>
-    //         {editMode
-    //         && <UserDescriptionForm
-    //             profile={profile}
-    //             toggleEditMode={() => setEditMode(false)}
-    //         />
-    //         || <UserDescription
-    //             toggleEditMode={() => setEditMode(true)}
-    //             profile={profile}
-    //             status={status}
-    //             updateStatus={updateStatus}
-    //             isOwner={isOwner}
-    //             onMainPhotoSelected={onMainPhotoSelected}
-    //         />
-    //         }
-    //
-    //     </div>
-    // );
+
     return (
         <Layout className={classes.profileLayout}>
             {editMode
-            && <UserDescriptionForm
+            && <UserDescriptionFormAntd
                 profile={profile}
                 toggleEditMode={() => setEditMode(false)}
             />

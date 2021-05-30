@@ -3,17 +3,10 @@ import defaultUserAvatar from "../../../../assets/default-user-avatar.jpg";
 import {ProfileStatusFunctional} from "../ProfileStatus/ProfileStatusFunctional";
 import {savePhoto, UserProfileType} from "../../../../redux/profile-reducer";
 import classes from "./UserDescription.module.css";
-import {Avatar, Button, Checkbox, Divider, Dropdown, Layout, List, Menu, Table, Typography, Upload} from "antd";
-import {
-    FacebookOutlined,
-    GithubOutlined,
-    InstagramOutlined, LinkedinOutlined,
-    TwitterOutlined,
-    UserOutlined,
-    YoutubeOutlined
-} from "@ant-design/icons";
-import VkIcon from "../../../common/VkIcon/VkIcon";
-import WebsiteIcon from "../../../common/WebsiteIcon/WebsiteIcon";
+import {Button, Divider, Dropdown, Layout, Menu, Tabs, Typography} from "antd";
+import MyPosts from "../../MyPosts/MyPosts";
+import {ContactsTable} from "./ContactsTable/ContactsTable";
+import MyPostsContainer from "../../MyPosts/MyPostsContainer";
 
 type UserDescriptionPropsType = {
     profile: UserProfileType
@@ -24,12 +17,7 @@ type UserDescriptionPropsType = {
     toggleEditMode: () => void
 }
 
-type ContactPropsType = {
-    title: string
-    value: string
-}
-
-const {Header, Content, Footer, Sider} = Layout;
+const { TabPane } = Tabs
 
 export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                                                                         profile,
@@ -41,36 +29,6 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                                                                     }) => {
 
     const inputRef = useRef<HTMLInputElement>(null)
-
-    const contactIconHandler = (title: string) => {
-        switch (title) {
-            case 'facebook':
-                return <FacebookOutlined/>
-            case 'vk':
-                return <VkIcon/>
-            case 'website':
-                return <WebsiteIcon/>
-            case 'twitter':
-                return <TwitterOutlined/>
-            case 'instagram':
-                return <InstagramOutlined/>
-            case 'youtube':
-                return <YoutubeOutlined/>
-            case 'github':
-                return <GithubOutlined/>
-            case 'mainLink':
-                return <LinkedinOutlined/>
-        }
-    }
-
-    const contactsData = Object.keys(profile.contacts).map((key, index) => {
-        const icon = contactIconHandler(key)
-
-        const description = profile.contacts[key] ? <a href={profile.contacts[key]}>View</a> : 'none'
-
-        return {key: index, icon: icon, title: key, description: description}
-    })
-
 
     const editUserDescriptionMenu = (
         <Menu>
@@ -84,8 +42,7 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
         </Menu>
     )
 
-    return <>
-        <Content className={classes.userDescription}>
+    return <div className={classes.userDescription}>
             <div className={classes.descriptionBlock + ' ' + classes.descriptionBlockLeft}>
                 <div className={classes.imgWrapper}>
                     {isOwner &&
@@ -113,30 +70,18 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                 <Typography className={classes.userNameBlock}>
                     <Typography.Title level={1}>{profile.fullName}</Typography.Title>
                     <ProfileStatusFunctional status={status} updateStatus={updateStatus}/>
-                    {!profile.lookingForAJob && <Typography.Text type="success" strong>Open to work!</Typography.Text>}
+                    {profile.lookingForAJob && <Typography.Text type="success" strong>Open to work!</Typography.Text>}
                 </Typography>
                 <div className={classes.contactsBlock}>
-                    <Divider orientation="center" style={ {borderTopColor: '#00000054'} }>Contacts</Divider>
-                    <Table dataSource={contactsData} showHeader={false} pagination={false}>
-                        <Table.Column title="Icon"
-                                      dataIndex="icon"
-                                      key="icon"
-                        ></Table.Column>
-                        <Table.Column title="Title"
-                                      dataIndex="title"
-                                      key="title"
-                        ></Table.Column>
-                        <Table.Column title="Description"
-                                      dataIndex="description"
-                                      key="description"
-                        ></Table.Column>
-                    </Table>
+                    <Tabs defaultActiveKey="1">
+                        <TabPane tab="My posts" key="1">
+                            <MyPostsContainer />
+                        </TabPane>
+                        <TabPane tab="Contacts" key="2">
+                            <ContactsTable contactsData={profile.contacts} />
+                        </TabPane>
+                    </Tabs>
                 </div>
             </div>
-        </Content>
-    </>
-}
-
-const Contact: React.FC<ContactPropsType> = ({title, value}) => {
-    return <li>{title}: {value || `Don't have one`}</li>
+        </div>
 }
