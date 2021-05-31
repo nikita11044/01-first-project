@@ -2,13 +2,9 @@ import React from "react";
 import {updateProfile, UserProfileType} from "../../../../redux/profile-reducer";
 import userDescriptionClasses from "./../UserDescription/UserDescription.module.css";
 import defaultUserAvatar from "../../../../assets/default-user-avatar.jpg";
-import {useFormik} from "formik";
 import {useDispatch} from "react-redux";
-import * as yup from 'yup'
-import {Button, Checkbox, Divider, Dropdown, Form, Input, Layout, Menu, Table, Tabs, Typography} from "antd";
-import {ContactsTable} from "../UserDescription/ContactsTable/ContactsTable";
+import {Button, Checkbox, Divider, Form, Input, Table, Tabs, Typography} from "antd";
 import TextArea from "antd/es/input/TextArea";
-import {ContactsTableForm} from "./ContactsTableForm/ContactsTableForm";
 import {
     FacebookOutlined,
     GithubOutlined,
@@ -25,66 +21,68 @@ type UserDescriptionFormPropsType = {
     toggleEditMode: () => void
 }
 
-export const UserDescriptionFormAntd: React.FC<UserDescriptionFormPropsType> = ({
+type FormValuesType = {
+    userId: string,
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    aboutMe: string,
+    github: string,
+    vk: string,
+    facebook: string,
+    instagram: string,
+    twitter: string,
+    website: string,
+    youtube: string,
+    mainLink: string
+}
+
+export const UserDescriptionForm: React.FC<UserDescriptionFormPropsType> = ({
                                                                                     profile,
                                                                                     toggleEditMode,
                                                                                 }) => {
 
     const dispatch = useDispatch()
 
-    // const schema = yup.object().shape({
-    //     fullName: yup.string().required('Required'),
-    //     aboutMe: yup.string().max(300, 'The text is too long'),
-    //     facebook: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     website: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     vk: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     twitter: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     instagram: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     youtube: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     github: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     mainLink: yup.string().url('Incorrect format. Please, enter a URL'),
-    //     lookingForAJobDescription: yup.string().max(300, 'The text is too long'),
-    //     lookingForAJob: yup.boolean(),
-    // })
+    const {userId, fullName, contacts, aboutMe, lookingForAJob, lookingForAJobDescription} = profile
+    const {facebook, website, vk, twitter, instagram, youtube, github, mainLink} = contacts
+    const initialValues = {
+        lookingForAJob: lookingForAJob,
+        lookingForAJobDescription: lookingForAJobDescription,
+        fullName: fullName,
+        aboutMe: aboutMe,
+        github: github,
+        vk: vk,
+        facebook: facebook,
+        instagram: instagram,
+        twitter: twitter,
+        website: website,
+        youtube: youtube,
+        mainLink: mainLink
+    }
 
-    const formik = useFormik({
-        initialValues: {
-            fullName: profile.fullName,
-            aboutMe: profile.aboutMe || 'none',
-            facebook: profile.contacts.facebook,
-            website: profile.contacts.website,
-            vk: profile.contacts.vk,
-            twitter: profile.contacts.twitter,
-            instagram: profile.contacts.instagram,
-            youtube: profile.contacts.youtube,
-            github: profile.contacts.github,
-            mainLink: profile.contacts.mainLink,
-            lookingForAJob: profile.lookingForAJob,
-            lookingForAJobDescription: profile.lookingForAJobDescription || 'none'
-        },
-        onSubmit: values => {
-            const data = {
-                userId: profile.userId,
-                lookingForAJob: values.lookingForAJob,
-                lookingForAJobDescription: values.lookingForAJobDescription || 'none',
-                fullName: values.fullName,
-                aboutMe: values.aboutMe || 'none',
-                contacts: {
-                    github: values.github,
-                    vk: values.vk,
-                    facebook: values.facebook,
-                    instagram: values.instagram,
-                    twitter: values.twitter,
-                    website: values.website,
-                    youtube: values.youtube,
-                    mainLink: values.mainLink
-                }
+    const onFinish = (values: FormValuesType) => {
+        const data = {
+            userId: userId,
+            lookingForAJob: values.lookingForAJob,
+            lookingForAJobDescription: values.lookingForAJobDescription || 'none',
+            fullName: values.fullName,
+            aboutMe: values.aboutMe || 'none',
+            contacts: {
+                github: values.github,
+                vk: values.vk,
+                facebook: values.facebook,
+                instagram: values.instagram,
+                twitter: values.twitter,
+                website: values.website,
+                youtube: values.youtube,
+                mainLink: values.mainLink
             }
-            console.log(data)
-            toggleEditMode()
-            dispatch(updateProfile(data))
         }
-    })
+        console.log(data)
+        toggleEditMode()
+        dispatch(updateProfile(data))
+    }
 
     const contactIconHandler = (title: string) => {
         switch (title) {
@@ -110,7 +108,7 @@ export const UserDescriptionFormAntd: React.FC<UserDescriptionFormPropsType> = (
     const tableData = Object.keys(profile.contacts).map((key, index) => {
         const icon = contactIconHandler(key)
 
-        const input = <Form.Item
+        const input = <Form.Item name={key}
             style={{margin: '0'}}
             rules={[
                 {
@@ -118,47 +116,45 @@ export const UserDescriptionFormAntd: React.FC<UserDescriptionFormPropsType> = (
                     message: 'Incorrect format. Please, enter a URL'
                 }
             ]}
-        ><Input
-            placeholder={profile.contacts[key]} {...formik.getFieldProps(key)}/></Form.Item>
+        ><Input/></Form.Item>
 
         return {key: index, icon: icon, title: key, input: input}
     })
 
     const {TabPane} = Tabs
 
-    return <Form onFinish={formik.handleSubmit}>
+    return <Form initialValues={initialValues} onFinish={onFinish}>
         <div className={userDescriptionClasses.userDescription}>
             <div
                 className={userDescriptionClasses.descriptionBlock + ' ' + userDescriptionClasses.descriptionBlockLeft}>
                 <div className={userDescriptionClasses.imgWrapper}>
-                        <img className={userDescriptionClasses.userAvatar}
-                             src={profile.photos.large || defaultUserAvatar}
-                             alt="user-avatar"/>
+                    <img className={userDescriptionClasses.userAvatar}
+                         src={profile.photos.large || defaultUserAvatar}
+                         alt="user-avatar"/>
                 </div>
                 <Typography>
                     <Divider orientation="center" style={{borderTopColor: '#00000054'}}>About me</Divider>
-                    <Form.Item className={userDescriptionClasses.descriptionBlock_text} rules={[
+                    <Form.Item name="aboutMe" className={userDescriptionClasses.descriptionBlock_text} rules={[
                         {
                             max: 300,
                             message: 'The text is too long'
                         }
                     ]}>
-                        <TextArea showCount maxLength={300} {...formik.getFieldProps('aboutMe')}/>
+                        <TextArea showCount maxLength={300}/>
                     </Form.Item>
                 </Typography>
                 <Typography>
                     <Divider orientation="center" style={{borderTopColor: '#00000054'}}>My skills</Divider>
-                    <Form.Item className={userDescriptionClasses.descriptionBlock_text} rules={[
+                    <Form.Item name="lookingForAJobDescription" className={userDescriptionClasses.descriptionBlock_text} rules={[
                         {
                             max: 300,
                             message: 'The text is too long'
                         }
                     ]}>
-                        <TextArea showCount
-                                  maxLength={300} {...formik.getFieldProps('lookingForAJobDescription')} />
+                        <TextArea showCount maxLength={300}/>
                     </Form.Item>
                 </Typography>
-                <Form.Item style={ {display: 'flex', alignSelf: 'center'} }>
+                <Form.Item style={{display: 'flex', alignSelf: 'center'}}>
                     <Button type="primary" htmlType="submit">
                         Save
                     </Button>
@@ -168,6 +164,7 @@ export const UserDescriptionFormAntd: React.FC<UserDescriptionFormPropsType> = (
                 className={userDescriptionClasses.descriptionBlock + '' + userDescriptionClasses.descriptionBlockRight}>
                 <Typography className={userDescriptionClasses.userNameBlock}>
                     <Form.Item
+                        name="fullName"
                         rules={[
                             {
                                 required: true,
@@ -175,10 +172,10 @@ export const UserDescriptionFormAntd: React.FC<UserDescriptionFormPropsType> = (
                             }
                         ]}>
                         <Input style={{maxWidth: '200px'}}
-                               placeholder={profile.fullName} {...formik.getFieldProps('fullName')}/>
+                               placeholder={profile.fullName}/>
                     </Form.Item>
-                    <Form.Item>
-                        <Checkbox {...formik.getFieldProps('lookingForAJob')}>Looking for a job</Checkbox>
+                    <Form.Item name="lookingForAJob" valuePropName="checked">
+                        <Checkbox>Looking for a job</Checkbox>
                     </Form.Item>
                 </Typography>
                 <div className={userDescriptionClasses.contactsBlock}>

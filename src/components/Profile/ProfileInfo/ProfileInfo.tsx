@@ -4,7 +4,7 @@ import {UserProfileType} from "../../../redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
 import {UserDescription} from './UserDescription/UserDescription';
 import {Layout} from "antd";
-import { UserDescriptionFormAntd } from './UserDescriptionFormAntd/UserDescriptionFormAntd';
+import { UserDescriptionForm } from './UserDescriptionForm/UserDescriptionForm';
 
 type ProfileInfoPropsType = {
     profile: UserProfileType
@@ -37,7 +37,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = React.memo(({
     return (
         <Layout className={classes.profileLayout}>
             {editMode
-            && <UserDescriptionFormAntd
+            && <UserDescriptionForm
                 profile={profile}
                 toggleEditMode={() => setEditMode(false)}
             />
