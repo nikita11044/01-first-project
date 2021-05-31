@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom"
 import {AppStateType} from "../../redux/redux-store";
-import {login} from "../../redux/auth-reducer";
+import {getCaptchaUrlTC, login} from "../../redux/auth-reducer";
 import styles from "./Login.module.css";
+import {getCaptchaUrl, getIsAuth} from "../../redux/selectors/auth-selectors";
 
 type FormikErrorType = {
     email?: string
@@ -15,7 +16,12 @@ type FormikErrorType = {
 export const Login = () => {
 
     const dispatch = useDispatch()
-    const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+    const isAuth = useSelector<AppStateType, boolean>(state => getIsAuth(state))
+    const captchaUrl = useSelector<AppStateType, string | null>(state => getCaptchaUrl(state))
+
+    useEffect(() => {
+        dispatch(getCaptchaUrlTC())
+    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -58,6 +64,7 @@ export const Login = () => {
             <input type="password" {...formik.getFieldProps('password')}/>
             {formik.touched.password && formik.errors.password &&
             <div className={styles.error}>{formik.errors.password}</div>}
+            {captchaUrl && <img src={captchaUrl}/>}
             <label htmlFor="rememberMe">Remember Me</label>
             <input type="checkbox" {...formik.getFieldProps('rememberMe')}/>
             <button>Log in</button>

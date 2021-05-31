@@ -70,6 +70,12 @@ export const profileAPI = {
     }
 }
 
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get<{url: string}>('security/get-captcha-url')
+    }
+}
+
 export type UpdateProfileDataType = {
     userId: number
     aboutMe: string
