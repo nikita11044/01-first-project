@@ -38,8 +38,8 @@ export const authAPI = {
     getAuthUserData: () => {
         return instance.get<CommonResponseType<{ id: number, email: string, login: string }>>('auth/me')
     },
-    login: (email: string, password: string, rememberMe: boolean) => {
-        return instance.post<CommonResponseType<{}>>('auth/login', {email, password, rememberMe})
+    login: (email: string, password: string, rememberMe: boolean, captcha: string | null ) => {
+        return instance.post<CommonResponseType<{}>>('auth/login', {email, password, rememberMe, captcha})
     },
     logout: () => {
         return instance.delete<CommonResponseType<{}>>('auth/login')
