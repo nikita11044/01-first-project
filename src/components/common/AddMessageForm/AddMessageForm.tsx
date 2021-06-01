@@ -4,60 +4,55 @@ import {
     useField, FormikProps,
 } from 'formik';
 import * as Yup from 'yup';
+import {Button, Form, FormInstance, Input} from "antd";
+import TextArea from "antd/es/input/TextArea";
+import {KeyboardEventHandler, Ref, useRef} from "react";
 
-type AddMessageFormikPropsType = {
+type AddMessagePropsType = {
     sendMessage: (message: string) => void
     placeholder: string
 }
 
-type MyTextAreaPropsType = {
-    name: string
-    placeholder: string
-}
+export const AddMessageForm: React.FC<AddMessagePropsType> = ({sendMessage, placeholder}) => {
+    // const initialValues: MyFormValues = {message: ''};
+    // return (
+    //     <div>
+    //         <Formik
+    //             initialValues={initialValues}
+    //             validationSchema={MessageValidationSchema}
+    //             onSubmit={(values, formikHelpers) => {
+    //                 sendMessage(values.message)
+    //                 formikHelpers.resetForm()
+    //             }}
+    //             render={({handleSubmit}: FormikProps<MyFormValues>) => {
+    //                 return <form
+    //                     onSubmit={handleSubmit}
+    //                     onKeyDown={(e) => {
+    //                         if (e.key === 'Enter' && !e.shiftKey) {
+    //                             e.preventDefault()
+    //                             handleSubmit();
+    //                         }
+    //                     }}>
+    //                     <MyTextArea name="message" placeholder={placeholder}/>
+    //                     <button type="submit">Submit</button>
+    //                 </form>
+    //             }}
+    //         />
+    //     </div>
+    // );
 
-interface MyFormValues {
-    message: string;
-}
+    const onFinish = (values: { message: string }) => {
+        if (values.message !== '') sendMessage(values.message)
+    }
 
-const MessageValidationSchema = Yup.object().shape({
-    message: Yup.string()
-        .required('Required')
-})
-
-export const AddMessageForm: React.FC<AddMessageFormikPropsType> = ({sendMessage, placeholder}) => {
-    const initialValues: MyFormValues = {message: ''};
-    return (
-        <div>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={MessageValidationSchema}
-                onSubmit={(values, formikHelpers) => {
-                    sendMessage(values.message)
-                    formikHelpers.resetForm()
-                }}
-                render={({handleSubmit}: FormikProps<MyFormValues>) => {
-                    return <form
-                        onSubmit={handleSubmit}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                                e.preventDefault()
-                                handleSubmit();
-                            }
-                        }}>
-                        <MyTextArea name="message" placeholder={placeholder}/>
-                        <button type="submit">Submit</button>
-                    </form>
-                }}
-            />
-        </div>
-    );
+    return <Form name="addMessageForm" initialValues={{message: ''}} onFinish={onFinish}>
+        <Form.Item name="message">
+            <TextArea placeholder={`What's new? Tell us!`} style={{resize: 'none'}}></TextArea>
+        </Form.Item>
+        <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Post
+            </Button>
+        </Form.Item>
+    </Form>
 };
-
-const MyTextArea: React.FC<MyTextAreaPropsType> = ({...props}) => {
-    const [field] = useField(props)
-    return (
-        <>
-            <textarea {...field} {...props}></textarea>
-        </>
-    )
-}
