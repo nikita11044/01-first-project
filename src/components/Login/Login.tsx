@@ -6,7 +6,9 @@ import {AppStateType} from "../../redux/redux-store";
 import {getCaptchaUrlTC, login} from "../../redux/auth-reducer";
 import styles from "./Login.module.css";
 import {getCaptchaUrl, getIsAuth} from "../../redux/selectors/auth-selectors";
-import {Button, Checkbox, Form, Input} from "antd";
+import {Button, Checkbox, Form, Input, message} from "antd";
+import {action} from "@storybook/addon-actions";
+import {actions} from "../../redux/action-creators";
 
 // type FormikErrorType = {
 //     email?: string
@@ -26,6 +28,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const isAuth = useSelector<AppStateType, boolean>(state => getIsAuth(state))
     const captchaUrl = useSelector<AppStateType, string | null>(state => getCaptchaUrl(state))
+    const error = useSelector<AppStateType, string | null>(state => state.app.error)
 
     useEffect(() => {
         dispatch(getCaptchaUrlTC())
@@ -58,9 +61,7 @@ export const Login = () => {
     //     }
     // })
 
-    if (isAuth) {
-        return <Redirect to={'/profile'}/>
-    }
+
 
     // return <>
     //     <h1>Login</h1>
@@ -82,6 +83,10 @@ export const Login = () => {
     const onFinish = (values: FormValuesType) => {
         const {email, password, rememberMe, captcha = null} = values
         dispatch(login(email, password, rememberMe, captcha))
+    }
+
+    if (isAuth) {
+        return <Redirect to={'/profile'}/>
     }
 
     return <Form

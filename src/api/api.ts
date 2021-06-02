@@ -8,7 +8,7 @@ type GetUsersResponseType = {
     error: string | null
 }
 
-type CommonResponseType<D> = {
+export type CommonResponseType<D> = {
     resultCode: number
     messages: string[]
     data: D

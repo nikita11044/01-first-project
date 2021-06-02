@@ -41,17 +41,22 @@ export const AddMessageForm: React.FC<AddMessagePropsType> = ({sendMessage, plac
     //     </div>
     // );
 
+    const [form] = Form.useForm()
+
     const onFinish = (values: { message: string }) => {
-        if (values.message !== '') sendMessage(values.message)
+        if (values.message !== '') {
+            sendMessage(values.message)
+            form.resetFields()
+        }
     }
 
-    return <Form name="addMessageForm" initialValues={{message: ''}} onFinish={onFinish}>
+    return <Form form={form} name="addMessageForm" initialValues={{message: ''}} onFinish={onFinish}>
         <Form.Item name="message">
-            <TextArea placeholder={`What's new? Tell us!`} style={{resize: 'none'}}></TextArea>
+            <TextArea placeholder={placeholder} style={{resize: 'none'}}></TextArea>
         </Form.Item>
         <Form.Item>
             <Button type="primary" htmlType="submit">
-                Post
+                Send
             </Button>
         </Form.Item>
     </Form>

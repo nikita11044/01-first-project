@@ -17,7 +17,8 @@ export const actions = {
     setStatus: (status: string) => ({type: 'SET-STATUS', status} as const),
     setInitialized: () => ({type: 'SET-INITIALIZED'}  as const),
     savePhotoSuccess: (largePhotoURL: string | null, smallPhotoURL: string | null) => ({type: 'SAVE-PHOTO-SUCCESS', largePhotoURL, smallPhotoURL} as const),
-    getCaptchaUrlSuccess: (url: string) => ({type: 'GET-CAPTCHA-URL-SUCCESS', url} as const)
+    getCaptchaUrlSuccess: (url: string) => ({type: 'GET-CAPTCHA-URL-SUCCESS', url} as const),
+    setAppError: (error: string | null) => ({type: 'SET-APP-ERROR', error} as const)
 }
 
 type InferActionTypes<T> = T extends {[key: string]: infer U} ? U : never

@@ -4,7 +4,7 @@ import './components/Header/Header.module.css'
 import './components/Navbar/Navbar.module.css'
 import './components/Profile/Profile.module.css'
 import Navbar from "./components/Navbar/Navbar";
-import {HashRouter, Route, withRouter, Switch} from "react-router-dom";
+import {HashRouter, Route, withRouter, Switch, Redirect} from "react-router-dom";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import store, {AppStateType} from "./redux/redux-store";
@@ -40,15 +40,20 @@ class App extends React.Component<PropsType> {
         if (!this.props.initialized) {
             return <Preloader/>
         }
+        debugger
         return (
             <div className="app-wrapper">
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
-                    <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
-                    <Route path='/users' render={() => <UsersContainer/>}/>
-                    <Route path='/login' render={() => <Login/>}/>
+                    <Switch>
+                        <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
+                        <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
+                        <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
+                        <Route path='/users' render={() => <UsersContainer/>}/>
+                        <Route path='/login' render={() => <Login/>}/>
+                        <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
+                    </Switch>
                 </div>
             </div>
 
@@ -61,10 +66,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         initialized: getInitialized(state)
     }
 }
-
-// export default compose<React.ComponentType>(
-//     withRouter,
-//     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App)
 
 let AppContainer = compose<React.ComponentType>(
     withRouter,

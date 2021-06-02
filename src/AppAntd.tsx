@@ -3,7 +3,7 @@ import './App.scss';
 import './components/Header/Header.module.css'
 import './components/Navbar/Navbar.module.css'
 import './components/Profile/Profile.module.css'
-import {HashRouter, Route, withRouter, Switch} from "react-router-dom";
+import {HashRouter, Route, withRouter, Switch, Redirect} from "react-router-dom";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import store, {AppStateType} from "./redux/redux-store";
@@ -65,10 +65,13 @@ class App extends React.Component<PropsType> {
                             <Breadcrumb.Item>Bill</Breadcrumb.Item>
                         </Breadcrumb>
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                            <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
-                            <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
-                            <Route path='/users' render={() => <UsersContainer/>}/>
-                            <Route path='/login' render={() => <Login/>}/>
+                            <Switch>
+                                <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
+                                <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
+                                <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
+                                <Route path='/users' render={() => <UsersContainer/>}/>
+                                <Route path='/login' render={() => <Login/>}/>
+                                <Route path='*' render={() => <div>404 NOT FOUND</div>}/></Switch>
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Social Network ©2021 Created by nikita11044</Footer>

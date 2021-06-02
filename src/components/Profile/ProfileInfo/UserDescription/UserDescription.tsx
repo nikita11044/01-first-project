@@ -17,7 +17,7 @@ type UserDescriptionPropsType = {
     toggleEditMode: () => void
 }
 
-const { TabPane } = Tabs
+const {TabPane} = Tabs
 
 export const UserDescription: React.FC<UserDescriptionPropsType> = ({
                                                                         profile,
@@ -43,45 +43,45 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
     )
 
     return <div className={classes.userDescription}>
-            <div className={classes.descriptionBlock + ' ' + classes.descriptionBlockLeft}>
-                <div className={classes.imgWrapper}>
-                    {isOwner &&
-                    <Dropdown overlay={editUserDescriptionMenu} trigger={['contextMenu']}>
-                        <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
-                             alt="user-avatar"/>
-                    </Dropdown>
+        <div className={classes.descriptionBlock + ' ' + classes.descriptionBlockLeft}>
+            <div className={classes.imgWrapper}>
+                {isOwner &&
+                <Dropdown overlay={editUserDescriptionMenu} trigger={['contextMenu']}>
+                    <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
+                         alt="user-avatar"/>
+                </Dropdown>
                     || <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
-                            alt="user-avatar"/>
-                    }
-                    <Typography.Text underline>Right click on photo to edit profile</Typography.Text>
-                </div>
-                <Typography>
-                    <Divider orientation="center" style={ {borderTopColor: '#00000054'} }>About me</Divider>
-                    <Typography.Paragraph
-                        className={classes.descriptionBlock_text}>{profile.aboutMe}</Typography.Paragraph>
-                </Typography>
-                <Typography>
-                    <Divider orientation="center" style={ {borderTopColor: '#00000054'} }>My skills</Divider>
-                    <Typography.Paragraph
-                        className={classes.descriptionBlock_text}>{profile.lookingForAJobDescription || 'none'}</Typography.Paragraph>
-                </Typography>
+                    alt="user-avatar"/>
+                }
+                {isOwner && <Typography.Text underline>Right click on photo to edit profile</Typography.Text>}
             </div>
-            <div className={classes.descriptionBlock + '' + classes.descriptionBlockRight}>
-                <Typography className={classes.userNameBlock}>
-                    <Typography.Title level={1}>{profile.fullName}</Typography.Title>
-                    <ProfileStatusFunctional status={status} updateStatus={updateStatus}/>
-                    {profile.lookingForAJob && <Typography.Text type="success" strong>Open to work!</Typography.Text>}
-                </Typography>
-                <div className={classes.contactsBlock}>
-                    <Tabs defaultActiveKey="1">
-                        <TabPane tab="My posts" key="1">
-                            <MyPostsContainer />
-                        </TabPane>
-                        <TabPane tab="Contacts" key="2">
-                            <ContactsTable contactsData={profile.contacts} />
-                        </TabPane>
-                    </Tabs>
-                </div>
+            <Typography>
+                <Divider orientation="center" style={{borderTopColor: '#00000054'}}>About me</Divider>
+                <Typography.Paragraph
+                    className={classes.descriptionBlock_text}>{profile.aboutMe}</Typography.Paragraph>
+            </Typography>
+            <Typography>
+                <Divider orientation="center" style={{borderTopColor: '#00000054'}}>My skills</Divider>
+                <Typography.Paragraph
+                    className={classes.descriptionBlock_text}>{profile.lookingForAJobDescription || 'none'}</Typography.Paragraph>
+            </Typography>
+        </div>
+        <div className={classes.descriptionBlock + '' + classes.descriptionBlockRight}>
+            <Typography className={classes.userNameBlock}>
+                <Typography.Title level={1}>{profile.fullName}</Typography.Title>
+                <ProfileStatusFunctional status={status} updateStatus={updateStatus}/>
+                {profile.lookingForAJob && <Typography.Text type="success" strong>Open to work!</Typography.Text>}
+            </Typography>
+            <div className={classes.contactsBlock}>
+                <Tabs defaultActiveKey="1">
+                    <TabPane tab="Contacts" key="1">
+                        <ContactsTable contactsData={profile.contacts}/>
+                    </TabPane>
+                    <TabPane tab={isOwner && "My posts" || 'Posts'} key="2">
+                        <MyPostsContainer isOwner={isOwner}/>
+                    </TabPane>
+                </Tabs>
             </div>
         </div>
+    </div>
 }

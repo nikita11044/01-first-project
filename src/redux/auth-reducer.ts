@@ -2,6 +2,7 @@ import {actions, ActionTypes} from "./action-creators";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {authAPI, securityAPI} from "../api/api";
+import {handleServerAppError} from "../utils/error-utils";
 
 let initialState = {
     id: 0,
@@ -50,12 +51,16 @@ export const getAuthUserData = (): ThunkType => async (dispatch: ThunkDispatch<A
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    debugger
     try {
         const response = await authAPI.login(email, password, rememberMe, captcha)
         if (response.data.resultCode === 0) {
             dispatch(getAuthUserData())
         } else if (response.data.resultCode === 10) {
+            handleServerAppError(response.data, dispatch)
             dispatch(getCaptchaUrlTC())
+        } else {
+            handleServerAppError(response.data, dispatch)
         }
     } catch (e) {
 
