@@ -4,32 +4,10 @@ body {
     background: #f0f2f5;
  }
 
-.app-wrapper {
-    display: grid;
-    margin: 0 auto;
-    width: 1200px;
-    grid-template-areas:
-        "h h"
-        "n c";
-    grid-template-rows: 60px 1fr;
-    grid-template-columns: 2fr 10fr;
-    grid-gap: 10px;
-}
-
-.app-wrapper-content {
-    //grid-area: c;
-    background-color: #fff;
-    border-bottom: 1px solid #e6ecf5;
-    border-radius: 5px;
-    margin: 10px;
-}
-
 h1, h2, h3, h4, h5, h6 {
     font-family: "Quicksand", Verdana, sans-serif;
     font-weight: 700;
 }
-
-/*--------------------*/
 
 .logo {
     height: 32px;
@@ -39,7 +17,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .site-layout .site-layout-background {
     background: #fff;
+    padding: 24px;
+    minHeight: 360px;
 }
+
+.spin-container {
+    margin: 20px 0;
+    padding: 30px 50px;
+    text-align: center;
+    border-radius: 4px;
+}
+
 [data-theme="dark"] .site-layout .site-layout-background {
     background: #141414;
 }

@@ -10,7 +10,7 @@ import store, {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {initializeApp} from "./redux/app-reducer";
 import {getInitialized} from "./redux/selectors/app-selectors";
-import {Breadcrumb, Layout, Menu} from "antd";
+import {Breadcrumb, Layout, Menu, Spin} from "antd";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
 import {withSuspense} from "./hoc/withSuspense";
@@ -49,6 +49,9 @@ class App extends React.Component<PropsType> {
 
     render() {
         const { collapsed } = this.state;
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
         return (
             <Layout style={{ minHeight: '100vh' }}>
                 <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
@@ -60,18 +63,15 @@ class App extends React.Component<PropsType> {
                         <HeaderContainer/>
                     </Header>
                     <Content style={{ margin: '0 16px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>User</Breadcrumb.Item>
-                            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                        <div className="site-layout-background" style={{ margin: '50px 0', padding: 24, minHeight: 360 }}>
                             <Switch>
                                 <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
                                 <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
                                 <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
                                 <Route path='/users' render={() => <UsersContainer/>}/>
                                 <Route path='/login' render={() => <Login/>}/>
-                                <Route path='*' render={() => <div>404 NOT FOUND</div>}/></Switch>
+                                <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
+                            </Switch>
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Social Network ©2021 Created by nikita11044</Footer>
@@ -86,10 +86,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         initialized: getInitialized(state)
     }
 }
-
-// export default compose<React.ComponentType>(
-//     withRouter,
-//     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App)
 
 let AppContainer = compose<React.ComponentType>(
     withRouter,
