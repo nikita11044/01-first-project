@@ -8,3 +8,7 @@ export const getProfile = (state: AppStateType): UserProfileType => {
 export const getStatus = (state: AppStateType): string => {
     return state.profile.status
 }
+
+export const getIsProfileLoading = (state: AppStateType): boolean => {
+    return state.profile.isProfileLoading
+}

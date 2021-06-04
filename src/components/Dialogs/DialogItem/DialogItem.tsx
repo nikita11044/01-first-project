@@ -1,6 +1,7 @@
 import classes from "./DialogsItem.module.css";
 import {NavLink} from "react-router-dom";
 import React from "react";
+import {Tabs} from "antd";
 
 export type DialogItemPropsType = {
     name: string

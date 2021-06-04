@@ -8,8 +8,8 @@ import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import store, {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
-import {initializeApp} from "./redux/app-reducer";
-import {getInitialized} from "./redux/selectors/app-selectors";
+import {initializeApp, RequestStatusType} from "./redux/app-reducer";
+import {getAppStatus} from "./redux/selectors/app-selectors";
 import {Breadcrumb, Layout, Menu, Spin} from "antd";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
@@ -19,7 +19,7 @@ import {Login} from "./components/Login/Login";
 
 
 type MapStateToPropsType = {
-    initialized: boolean
+    appStatus: RequestStatusType
 }
 
 type MapDispatchToPropsType = {
@@ -49,7 +49,7 @@ class App extends React.Component<PropsType> {
 
     render() {
         const { collapsed } = this.state;
-        if (!this.props.initialized) {
+        if (this.props.appStatus === 'loading') {
             return <Preloader/>
         }
         return (
@@ -83,7 +83,7 @@ class App extends React.Component<PropsType> {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        initialized: getInitialized(state)
+        appStatus: getAppStatus(state)
     }
 }
 

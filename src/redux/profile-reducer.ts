@@ -40,7 +40,8 @@ let initialState = {
             large: '' as string | null
         }
     },
-    status: ''
+    status: '',
+    isProfileLoading: true
 }
 
 type InitialStateType = typeof initialState
@@ -71,6 +72,12 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
                 profile:  {...state.profile, photos: {large: action.largePhotoURL, small: action.smallPhotoURL} }
             }
         }
+        case "SET-IS-PROFILE-LOADING": {
+            return {
+                ...state,
+                isProfileLoading: action.value
+            }
+        }
         default:
             return state
     }
@@ -79,8 +86,10 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
 export const requestUserProfile = (userId: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {
+    dispatch(actions.setIsProfileLoading(true))
     let response = await profileAPI.getUserProfile(userId)
     dispatch(actions.setUserProfile(response.data))
+    dispatch(actions.setIsProfileLoading(false))
 }
 
 export const requestStatus = (userId: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionTypes>) => {

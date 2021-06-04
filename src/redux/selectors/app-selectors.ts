@@ -1,5 +1,6 @@
 import {AppStateType} from "../redux-store";
+import {RequestStatusType} from "../app-reducer";
 
-export const getInitialized = (state: AppStateType): boolean => {
-    return state.app.initialized
+export const getAppStatus = (state: AppStateType): RequestStatusType => {
+    return state.app.appStatus
 }

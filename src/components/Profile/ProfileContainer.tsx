@@ -7,8 +7,9 @@ import {RouteComponentProps} from "react-router"
 import {requestUserProfile, requestStatus, updateStatus, UserProfileType, savePhoto} from "../../redux/profile-reducer";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from 'redux';
-import {getProfile, getStatus} from "../../redux/selectors/profile-selectors";
+import {getIsProfileLoading, getProfile, getStatus} from "../../redux/selectors/profile-selectors";
 import {getAuthorizedUserId, getIsAuth} from "../../redux/selectors/auth-selectors";
+import Preloader from "../common/Preloader/Preloader";
 
 type PathParamsType = {
     userId: string | undefined
@@ -19,6 +20,7 @@ type MapStateToPropsType = {
     status: string
     isAuth: boolean
     authorizedUserId: number | null
+    isProfileLoading: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -58,6 +60,9 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     render() {
+        if (this.props.isProfileLoading) {
+            return <Preloader/>
+        }
         return (
             <Profile {...this.props} isOwner={!this.props.match.params.userId}/>
         )
@@ -69,7 +74,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         profile: getProfile(state),
         isAuth: getIsAuth(state),
         status: getStatus(state),
-        authorizedUserId: getAuthorizedUserId(state)
+        authorizedUserId: getAuthorizedUserId(state),
+        isProfileLoading: getIsProfileLoading(state),
     }
 }
 

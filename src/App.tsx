@@ -9,8 +9,8 @@ import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import store, {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
-import {initializeApp} from "./redux/app-reducer";
-import {getInitialized} from "./redux/selectors/app-selectors";
+import {initializeApp, RequestStatusType} from "./redux/app-reducer";
+import {getAppStatus} from "./redux/selectors/app-selectors";
 import { Login } from './components/Login/Login';
 import {withSuspense} from "./hoc/withSuspense";
 import UsersContainer from './components/Users/UsersContainer';
@@ -18,7 +18,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 
 
 type MapStateToPropsType = {
-    initialized: boolean
+    appStatus: RequestStatusType
 }
 
 type MapDispatchToPropsType = {
@@ -37,7 +37,7 @@ class App extends React.Component<PropsType> {
     }
 
     render() {
-        if (!this.props.initialized) {
+        if (this.props.appStatus === 'loading') {
             return <Preloader/>
         }
         debugger
@@ -63,7 +63,7 @@ class App extends React.Component<PropsType> {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        initialized: getInitialized(state)
+        appStatus: getAppStatus(state)
     }
 }
 
