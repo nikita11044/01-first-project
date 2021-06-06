@@ -10,12 +10,12 @@ import {getIsAuth} from "../../redux/selectors/auth-selectors";
 
 type MapStateToPropsType = {
     dialogs: DialogsType[]
-    messages: MessageType[]
+    messages: { [key: string] : MessageType[] }
     isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
-    sendMessage: (message: string) => void
+    sendMessage: (message: string, receiverId?: string) => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType

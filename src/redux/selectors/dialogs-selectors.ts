@@ -5,6 +5,6 @@ export const getDialogs= (state: AppStateType): DialogsType[] => {
     return state.dialogs.dialogs
 }
 
-export const getMessages= (state: AppStateType): MessageType[] => {
+export const getMessages= (state: AppStateType): { [key: string] : MessageType[] } => {
     return state.dialogs.messages
 }

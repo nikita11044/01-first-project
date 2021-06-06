@@ -8,21 +8,24 @@ import {Tabs} from "antd";
 
 export type DialogsPropsType = {
     dialogs: Array<DialogsType>
-    messages: Array<MessageType>
-    sendMessage: (message: string) => void
+    messages: { [key: string]: Array<MessageType> }
+    sendMessage: (message: string, receiverId?: string) => void
 }
 
 const Dialogs: React.FC<DialogsPropsType> = React.memo(({dialogs, messages, sendMessage}) => {
 
-        const messagesElements = messages.map(el => {
-            return <MessageItem key={el.id} message={el.message}/>
-        })
-
         const dialogElements = dialogs.map(el => {
             return <Tabs.TabPane tab={el.name} key={el.id}>
-                {
-                    messagesElements
-                }
+                <div className={classes.messagesWrapper}>
+                    {
+                        messages[el.id].map(el => {
+                            return <MessageItem key={el.id} message={el.message}/>
+                        })
+                    }
+                </div>
+                <div className={classes.addMessageFormWrapper}>
+                    <AddMessageForm dialogId={el.id} sendMessage={sendMessage} placeholder={'Enter you message'}/>
+                </div>
             </Tabs.TabPane>
         })
 

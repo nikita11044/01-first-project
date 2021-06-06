@@ -1,12 +1,16 @@
-.dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+.messagesWrapper {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 200px;
 }
 
-.dialogsItems {
-    padding: 10px;
+.addMessageFormWrapper {
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.messages {
-    padding: 10px;
+::-webkit-scrollbar {
+    display: none;
 }

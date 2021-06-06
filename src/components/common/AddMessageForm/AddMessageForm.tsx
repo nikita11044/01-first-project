@@ -9,43 +9,20 @@ import TextArea from "antd/es/input/TextArea";
 import {KeyboardEventHandler, Ref, useRef} from "react";
 
 type AddMessagePropsType = {
-    sendMessage: (message: string) => void
+    dialogId?: string
+    sendMessage: (message: string, receiverId?: string) => void
     placeholder: string
 }
 
-export const AddMessageForm: React.FC<AddMessagePropsType> = ({sendMessage, placeholder}) => {
-    // const initialValues: MyFormValues = {message: ''};
-    // return (
-    //     <div>
-    //         <Formik
-    //             initialValues={initialValues}
-    //             validationSchema={MessageValidationSchema}
-    //             onSubmit={(values, formikHelpers) => {
-    //                 sendMessage(values.message)
-    //                 formikHelpers.resetForm()
-    //             }}
-    //             render={({handleSubmit}: FormikProps<MyFormValues>) => {
-    //                 return <form
-    //                     onSubmit={handleSubmit}
-    //                     onKeyDown={(e) => {
-    //                         if (e.key === 'Enter' && !e.shiftKey) {
-    //                             e.preventDefault()
-    //                             handleSubmit();
-    //                         }
-    //                     }}>
-    //                     <MyTextArea name="message" placeholder={placeholder}/>
-    //                     <button type="submit">Submit</button>
-    //                 </form>
-    //             }}
-    //         />
-    //     </div>
-    // );
+export const AddMessageForm: React.FC<AddMessagePropsType> = ({dialogId, sendMessage, placeholder}) => {
 
     const [form] = Form.useForm()
 
     const onFinish = (values: { message: string }) => {
         if (values.message !== '') {
-            sendMessage(values.message)
+            dialogId
+                ? sendMessage(values.message, dialogId)
+                : sendMessage(values.message)
             form.resetFields()
         }
     }

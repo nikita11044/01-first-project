@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./MessageItem.module.css";
+import classes from './MessageItem.module.css'
 
 export type MessageItemPropsType = {
     message: string
@@ -7,8 +7,10 @@ export type MessageItemPropsType = {
 
 const MessageItem: React.FC<MessageItemPropsType> = React.memo(({message}) => {
     return (
-        <div className={classes.message}>
-            {message}
+        <div>
+            <p className={classes.message}>
+                {message}
+            </p>
         </div>
     );
 })
