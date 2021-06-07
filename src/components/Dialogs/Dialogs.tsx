@@ -1,5 +1,4 @@
-import React from "react";
-import DialogItem from "./DialogItem/DialogItem";
+import React, {useEffect} from "react";
 import classes from "./Dialogs.module.css";
 import MessageItem from "./MessageItem/MessageItem";
 import {DialogsType, MessageType} from "../../redux/dialogs-reducer";
@@ -14,45 +13,34 @@ export type DialogsPropsType = {
 
 const Dialogs: React.FC<DialogsPropsType> = React.memo(({dialogs, messages, sendMessage}) => {
 
-        const dialogElements = dialogs.map(el => {
-            return <Tabs.TabPane tab={el.name} key={el.id}>
-                <div className={classes.messagesWrapper}>
-                    {
-                        messages[el.id].map(el => {
-                            return <MessageItem key={el.id} message={el.message}/>
-                        })
-                    }
-                </div>
-                <div className={classes.addMessageFormWrapper}>
-                    <AddMessageForm dialogId={el.id} sendMessage={sendMessage} placeholder={'Enter you message'}/>
-                </div>
-            </Tabs.TabPane>
-        })
+    useEffect(() => {
+        const wrapper = document.getElementById('wrapper')
 
+        if (wrapper) {
+            wrapper.scrollTo(0, wrapper.scrollHeight)
+        }
 
-        return (
-            <Tabs tabPosition={'left'}>
+    }, [messages])
+
+    const dialogElements = dialogs.map(el => {
+        return <Tabs.TabPane tab={el.name} key={el.id}>
+            <div id="wrapper" className={classes.messagesWrapper}>
                 {
-                    dialogElements
+                  messages[el.id].length !== 0
+                  ? messages[el.id].map(el => {
+                      return <MessageItem key={el.id} message={el.message}/>
+                    })
+                  :  <p>Waiting for your first message!'</p>
                 }
-            </Tabs>
-        )
+            </div>
+            <div className={classes.addMessageFormWrapper}>
+                <AddMessageForm dialogId={el.id} sendMessage={sendMessage} placeholder={'Enter you message'}/>
+            </div>
+        </Tabs.TabPane>
+    })
 
-        // return (
-        //     <div className={classes.dialogs}>
-        //         <div className={classes.dialogsItems}>
-        //             {
-        //                 dialogElements
-        //             }
-        //         </div>
-        //         <div className={classes.messages}>
-        //             <div>{messagesElements}</div>
-        //             <div>
-        //                 <AddMessageForm sendMessage={sendMessage} placeholder={'Enter you message'}/>
-        //             </div>
-        //         </div>
-        //     </div>
-        // );
-    }
+    return (<Tabs tabPosition={'left'}>{dialogElements}</Tabs>)
+}
 )
+
 export default Dialogs;

@@ -7,7 +7,7 @@ export type MessageItemPropsType = {
 
 const MessageItem: React.FC<MessageItemPropsType> = React.memo(({message}) => {
     return (
-        <div>
+        <div className={classes.messageWrapper}>
             <p className={classes.message}>
                 {message}
             </p>

@@ -1,3 +1,7 @@
+.messageWrapper {
+    max-width: 387px;
+}
+
 .message {
     border-radius: 1.15rem;
     line-height: 1.25;
@@ -5,5 +9,6 @@
     padding: 0.5rem .875rem;
     position: relative;
     word-wrap: break-word;
+    max-width: 350px;
     background-color: #e7f3ff;
 }

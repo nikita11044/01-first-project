@@ -1,11 +1,11 @@
 .messagesWrapper {
     overflow-x: hidden;
-    overflow-y: scroll;
-    max-height: 200px;
+    height: 200px;
+    max-width: 380px;
 }
 
 .addMessageFormWrapper {
-    max-width: 200px;
+    max-width: 387px;
     display: flex;
     flex-direction: column;
     align-items: center;
