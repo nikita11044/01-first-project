@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.css';
 import ReactDOM from "react-dom";
-import SocialNetworkAppAntd from "./AppAntd";
+import SocialNetworkApp from "./App";
 
 ReactDOM.render(
     <React.StrictMode>
-        <SocialNetworkAppAntd />
+        <SocialNetworkApp />
     </React.StrictMode>,
     document.getElementById('root')
 );

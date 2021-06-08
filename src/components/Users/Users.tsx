@@ -1,8 +1,8 @@
 import React from "react";
 import {UserType} from "../../redux/users-reducer";
-import {useDispatch} from "react-redux";
-import {Paginator} from "../common/Paginator/Paginator";
 import User from "./User";
+import classes from './Users.module.css'
+import {Pagination} from "antd";
 
 type UsersPropsType = {
     users: UserType[]
@@ -26,12 +26,11 @@ const Users: React.FC<UsersPropsType> = ({
                                              followingInProgress,
                                          }) => {
 
-    const dispatch = useDispatch()
-
     return <div>
-        <Paginator currentPage={currentPage} onPageChanged={onPageChanged} pageSize={pageSize} totalUsersCount={totalUsersCount}/>
+        <Pagination className={classes.pagination} current={currentPage} pageSize={pageSize} onChange={onPageChanged} total={totalUsersCount}/>
         {
-            users.map(user => <User key={user.id} user={user} follow={follow} unfollow={unfollow} followingInProgress={followingInProgress}/>)
+            users.map(user => <User key={user.id} user={user} follow={follow} unfollow={unfollow}
+                                    followingInProgress={followingInProgress}/>)
         }
     </div>
 }

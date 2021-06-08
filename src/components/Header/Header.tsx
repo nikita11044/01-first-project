@@ -15,7 +15,7 @@ const Header = React.memo((props: HeaderPropsType) => {
             <div className={classes.loginBlock}>
                 {
                     props.isAuth
-                        ? <div>{props.login} - <Button onClick={props.logout}>Log out</Button></div>
+                        ? <Button onClick={props.logout}>Log out</Button>
                         : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>
