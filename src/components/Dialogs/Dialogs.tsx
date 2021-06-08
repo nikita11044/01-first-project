@@ -14,17 +14,19 @@ export type DialogsPropsType = {
 const Dialogs: React.FC<DialogsPropsType> = React.memo(({dialogs, messages, sendMessage}) => {
 
     useEffect(() => {
-        const wrapper = document.getElementById('wrapper')
+        const wrappers = document.querySelectorAll(`.${classes.messagesWrapper}`)
 
-        if (wrapper) {
-            wrapper.scrollTo(0, wrapper.scrollHeight)
+        if (wrappers) {
+            wrappers.forEach(el => {
+                el.scrollTo(0, el.scrollHeight)
+            })
         }
 
     }, [messages])
 
     const dialogElements = dialogs.map(el => {
         return <Tabs.TabPane tab={el.name} key={el.id}>
-            <div id="wrapper" className={classes.messagesWrapper}>
+            <div className={classes.messagesWrapper}>
                 {
                   messages[el.id].length !== 0
                   ? messages[el.id].map(el => {
