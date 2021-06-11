@@ -41,10 +41,17 @@ class App extends React.Component<PropsType> {
 
     state = {
         collapsed: false,
+        breakpoint: false
     };
 
     onCollapse = (collapsed: boolean) => {
-        this.setState({ collapsed });
+        this.setState({ ...this.state, collapsed });
+        console.log(this.state)
+    };
+
+    onBreakpoint = (breakpoint: boolean) => {
+        this.setState({ ...this.state, breakpoint });
+        console.log(this.state)
     };
 
     render() {
@@ -54,11 +61,11 @@ class App extends React.Component<PropsType> {
         }
         return (
             <Layout style={{ minHeight: '100vh' }}>
-                <Sider collapsible breakpoint="lg" collapsedWidth="0" collapsed={collapsed} onCollapse={this.onCollapse}>
+                <Sider collapsible breakpoint="lg" onBreakpoint={this.onBreakpoint} collapsedWidth="0" collapsed={collapsed} onCollapse={this.onCollapse}>
                     <div className="logo" />
                     <Navbar/>
                 </Sider>
-                <Layout className="site-layout">
+                <Layout className={`site-layout ${!this.state.collapsed && this.state.breakpoint ? 'blurMode' : ''}`}>
                     <Header className="site-layout-background" style={{ padding: 0 }} >
                         <HeaderContainer/>
                     </Header>

@@ -36,8 +36,19 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
 }
 
+.blurMode {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
 @media(max-width: 992px) {
     .ant-layout-sider-zero-width-trigger {
         display: block;
+    }
+}
+
+@media (max-width: 580px) {
+    .site-layout-background {
+        overflow: hidden;
     }
 }
