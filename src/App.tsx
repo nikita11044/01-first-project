@@ -54,7 +54,7 @@ class App extends React.Component<PropsType> {
         }
         return (
             <Layout style={{ minHeight: '100vh' }}>
-                <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+                <Sider collapsible breakpoint="lg" collapsedWidth="0" collapsed={collapsed} onCollapse={this.onCollapse}>
                     <div className="logo" />
                     <Navbar/>
                 </Sider>

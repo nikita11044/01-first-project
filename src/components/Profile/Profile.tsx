@@ -11,11 +11,7 @@ type ProfilePropsType = {
 }
 
 const Profile: React.FC<ProfilePropsType> = React.memo(({profile, status, updateStatus, isOwner, savePhoto}) => {
-    return (
-        <div>
-            <ProfileInfo profile={profile} status={status} updateStatus={updateStatus} isOwner={isOwner} savePhoto={savePhoto}/>
-        </div>
-    );
+    return <ProfileInfo profile={profile} status={status} updateStatus={updateStatus} isOwner={isOwner} savePhoto={savePhoto}/>
 })
 
 export default Profile

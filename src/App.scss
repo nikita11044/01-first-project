@@ -31,3 +31,13 @@ h1, h2, h3, h4, h5, h6 {
 [data-theme="dark"] .site-layout .site-layout-background {
     background: #141414;
 }
+
+.ant-layout-sider-zero-width-trigger {
+    display: none;
+}
+
+@media(max-width: 992px) {
+    .ant-layout-sider-zero-width-trigger {
+        display: block;
+    }
+}

@@ -30,30 +30,19 @@ export const UserDescription: React.FC<UserDescriptionPropsType> = ({
 
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const editUserDescriptionMenu = (
-        <Menu>
-            <Menu.Item key="1" style={{textAlign: 'center'}}><Button onClick={toggleEditMode}>Edit</Button></Menu.Item>
-            <Menu.Item key="2">
-                <Button onClick={() => inputRef && inputRef.current && inputRef.current.click()}>
-                    Upload Photo
-                    <input ref={inputRef} hidden type="file" onChange={onMainPhotoSelected}/>
-                </Button>
-            </Menu.Item>
-        </Menu>
-    )
-
     return <div className={classes.userDescription}>
         <div className={classes.descriptionBlock + ' ' + classes.descriptionBlockLeft}>
             <div className={classes.imgWrapper}>
+                <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar} alt="user-avatar"/>
                 {isOwner &&
-                <Dropdown overlay={editUserDescriptionMenu} trigger={['contextMenu']}>
-                    <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
-                         alt="user-avatar"/>
-                </Dropdown>
-                    || <img className={classes.userAvatar} src={profile.photos.large || defaultUserAvatar}
-                    alt="user-avatar"/>
+                    <div className={classes.editButtonsWrapper}>
+                        <Button onClick={toggleEditMode}>Edit</Button>
+                        <Button onClick={() => inputRef && inputRef.current && inputRef.current.click()}>
+                            Upload Photo
+                            <input ref={inputRef} hidden type="file" onChange={onMainPhotoSelected}/>
+                        </Button>
+                    </div>
                 }
-                {isOwner && <Typography.Text underline>Right click on photo to edit profile</Typography.Text>}
             </div>
             <Typography>
                 <Divider orientation="center" style={{borderTopColor: '#00000054'}}>About me</Divider>

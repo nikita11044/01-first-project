@@ -50,6 +50,13 @@
     border-radius: 1rem;
 }
 
+.editButtonsWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
 .contactsBlock {
     max-width: 500px;
 }
@@ -61,4 +68,18 @@
 
 .alignBaseline {
     align-items: baseline;
+}
+
+@media (max-width: 580px) {
+    .userDescription {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+    }
+
+    .descriptionBlockRight {
+        order: 1;
+    }
 }
